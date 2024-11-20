@@ -1,0 +1,36 @@
+<div>
+  <label for="hospitalSelect">Select a Hospital:</label>
+
+  <select id="hospitalSelect"
+          class="form-select mt-2"
+          (change)="onHospitalSelect($event)">
+    <option *ngFor="let hospital of hospitals"
+            [value]="hospital.id">
+      {{ hospital.name }} ({{ hospital.role }})
+    </option>
+  </select>
+
+  <div *ngIf="selectedHospital"
+       class="mt-4">
+    <h4>Details for {{ selectedHospital.name }}</h4>
+    <p>Role: {{ selectedHospital.role }}</p>
+
+    <ng-container *ngIf="selectedHospital?.role === 'Trainer'">
+      <h5>Uploads</h5>
+      <ul>
+        <li *ngFor="let upload of selectedHospital?.uploads">
+          {{ upload.modelId }} - {{ upload.status }} ({{ upload.timestamp }})
+        </li>
+      </ul>
+    </ng-container>
+
+    <ng-container *ngIf="selectedHospital?.role === 'Miner'">
+      <h5>Votes</h5>
+      <ul>
+        <li *ngFor="let vote of selectedHospital?.votes">
+          {{ vote.modelId }} - {{ vote.vote }} ({{ vote.timestamp }})
+        </li>
+      </ul>
+    </ng-container>
+  </div>
+</div>

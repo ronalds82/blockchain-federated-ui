@@ -1,0 +1,12 @@
+<div>
+  <h3>Upload Model Weights</h3>
+
+  <input type="file"
+         class="form-control mt-2"
+         (change)="uploadModel($event)" />
+
+  <div *ngIf="uploadSuccess"
+       class="alert alert-success mt-3">
+    Model uploaded successfully.
+  </div>
+</div>
