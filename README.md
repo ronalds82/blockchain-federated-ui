@@ -2,6 +2,36 @@
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.0.0.
 
+## Installing application locally
+
+### To install and run application locally, please install NPM latest version and Git.
+
+Run the following command:
+
+```bash
+npm install -g @angular/cli
+```
+
+Set execution policy inside PowerShell Administrator mode (Choose Y or A as an option):
+
+```bash
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+```
+
+Clone the repository:
+
+```bash
+git clone https://github.com/ronalds82/blockchain-federated-ui.git
+```
+
+Open up repository locally in the terminal and run:
+
+```bash
+npm install
+```
+
+You should be fine!
+
 ## Development server
 
 To start a local development server, run:
