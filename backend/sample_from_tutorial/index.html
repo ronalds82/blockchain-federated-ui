@@ -1,19 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Test</title>
+    <title>Training Status Manager</title>
   </head>
-
   <body>
     <button id="connectButton">Connect</button>
-    <button id="balanceButton">getBalance</button>
-    <button id="withdrawButton">Withdraw</button>
-    <!-- <form> -->
-    <label for="ethAmount">ETH Amount</label>
-    <input id="ethAmount" placeholder="0.1" type="number"/>
-    <button type="button" id="fundButton" > Fund </button>
-    <!-- </form> -->
+    <div>
+      <h2>Current Status: <span id="currentStatus">Unknown</span></h2>
+      <button id="getStatusButton">Get Current Status</button>
+    </div>
+    <div>
+      <h3>Update Status</h3>
+      <select id="statusSelect">
+        <option value="0">NONE</option>
+        <option value="1">WAITING_FOR_PARTICIPANTS</option>
+        <option value="2">START_TRAINING</option>
+        <option value="3">TRAINING_COMPLETED</option>
+      </select>
+      <button id="updateStatusButton">Update Status</button>
+    </div>
+    <!-- Include ethers.js library -->
+    <script src="https://cdn.jsdelivr.net/npm/ethers@5.6.0/dist/ethers.min.js"></script>
+    <script src="./index.js" type="module"></script>
   </body>
-
-  <script src="./index.js" type="module"></script>
 </html>
