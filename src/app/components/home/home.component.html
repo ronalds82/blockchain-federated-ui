@@ -5,8 +5,7 @@
 
   <div class="row g-4">
     <div class="col-md-6">
-      <button class="btn btn-primary my-2"
-              (click)="onConnectButtonClick()">
+      <button class="btn btn-primary my-2" (click)="onConnectButtonClick()">
         {{ connectButtonLabel }}
       </button>
 
@@ -15,31 +14,25 @@
         <span>{{ currentStatus }}</span>
       </div>
 
-      <button class="btn btn-secondary my-2"
-              (click)="onGetStatusButtonClick()">
+      <button class="btn btn-secondary my-2" (click)="onGetStatusButtonClick()">
         Get Status
       </button>
 
       <div class="my-3">
-        <label for="statusSelect"
-               class="form-label">Select Status:</label>
-        <select id="statusSelect"
-                class="form-select"
-                [(ngModel)]="selectedStatus">
-          <option *ngFor="let status of statusOptions"
-                  [value]="status">
-            {{ status }}
+        <label for="statusSelect" class="form-label">Select Status:</label>
+        <select id="statusSelect" class="form-select" [(ngModel)]="selectedStatus">
+          <option *ngFor="let status of statusOptions" [value]="status.value">
+            {{ status.label }}
           </option>
         </select>
       </div>
 
-      <button class="btn btn-success my-2 me-2"
-              (click)="onUpdateStatusButtonClick()">
+
+      <button class="btn btn-success my-2 me-2" (click)="onUpdateStatusButtonClick()">
         Update Status
       </button>
 
-      <button class="btn btn-success my-2"
-              (click)="onInitializeRoundClick()">
+      <button class="btn btn-success my-2" (click)="onInitializeRoundClick()">
         Initialize round
       </button>
     </div>

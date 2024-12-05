@@ -16,8 +16,12 @@ import { ethers } from '../../../../backend/sample_from_tutorial/ethers-5.6.esm.
 export class HomeComponent implements OnInit {
   connectButtonLabel: string = 'Connect to MetaMask';
   currentStatus: string = '';
-  selectedStatus: string = RoundStatus.None;
-  statusOptions: string[] = Object.values(RoundStatus);
+  selectedStatus: Number = RoundStatus.NONE;
+
+  // This was just a quick fix
+  statusOptions = Object.keys(RoundStatus)
+    .filter(key => isNaN(Number(key))) // Filter out numeric keys
+    .map(key => ({ label: key, value: RoundStatus[key as keyof typeof RoundStatus] }));
 
   provider: ethers.providers.Web3Provider | null = null;
   contract: ethers.Contract | null = null;
@@ -63,7 +67,7 @@ export class HomeComponent implements OnInit {
       alert('Please install MetaMask');
     }
   }
-  
+
   async onInitializeRoundClick(): Promise<void> {
     return;
   }

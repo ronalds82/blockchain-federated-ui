@@ -1,6 +1,6 @@
 export enum RoundStatus {
-  None = "NONE", 
-  WaitingForParticipants = "WAITING_FOR_PARTICIPANTS", 
-  StartTraining = "START_TRAINING", 
-  TrainingCompleted = "TRAINING_COMPLETED"
+  NONE = 0,
+  WAITING_FOR_PARTICPANTS = 1,
+  START_TRAINING = 2,
+  TRAINING_COMPLETED = 3
 }
