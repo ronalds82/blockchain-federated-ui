@@ -5,8 +5,8 @@ import { HospitalService } from '../../services/hospital.service';
 import { Observable } from 'rxjs';
 import { HospitalDetails } from '../../models/hospital.model';
 import { FormsModule } from '@angular/forms';
-import { abi, contractAddress } from '../../../../backend/sample_from_tutorial/new_contract.js';
-import { ethers } from '../../../../backend/sample_from_tutorial/ethers-5.6.esm.min';
+import { contractAddress as trainingStatusContractAddress, abi as trainingStatusAbi } from '../../../../backend/constants/training_status_contract.js'
+import { ethers } from '../../../../backend/sample_from_tutorial/ethers-5.6.esm.min'; // probably could be gotten as a package instead
 
 @Component({
   selector: 'app-home-component',
@@ -35,7 +35,7 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     if (window.ethereum) {
       this.provider = new ethers.providers.Web3Provider(window.ethereum);
-      this.contract = new ethers.Contract(contractAddress, abi, this.provider);
+      this.contract = new ethers.Contract(trainingStatusContractAddress, trainingStatusAbi, this.provider);
     } else {
       this.connectButtonLabel = 'Please install MetaMask';
     }
