@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { HospitalService } from '../../services/hospital.service';
 import { Observable } from 'rxjs';
 import { Hospital } from '../../models/hospital.model';
-import { abi, contractAddress } from '../../../../backend/sample_from_tutorial/new_contract.js';
+import { contractAddress as trainingStatusContractAddress, abi as trainingStatusAbi } from '../../../../backend/constants/training_status_contract.js'
 import { ethers } from '../../../../backend/sample_from_tutorial/ethers-5.6.esm.min';
 import { HomeConnectComponent } from './home-connect/home-connect.component';
 import { HomeParticipantsComponent } from './home-participants/home-participants.component';
