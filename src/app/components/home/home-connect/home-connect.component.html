@@ -1,38 +1,38 @@
 <button class="btn btn-primary my-2"
         (click)="onConnectButtonClick()">
-    {{ connectButtonLabel }}
+  {{ connectButtonLabel }}
 </button>
 
 <div class="my-3">
-    <span class="fw-bold">Current Status:</span>
-    <span>{{ currentStatus }}</span>
+  <span class="fw-bold">Current Status:</span>
+  <span>{{ currentStatus }}</span>
 </div>
 
 <button class="btn btn-secondary my-2"
         (click)="onGetStatusButtonClick()">
-    Get Status
+  Get Status
 </button>
 
 <div class="my-3">
-    <label for="statusSelect"
-           class="form-label">Select Status:</label>
-    <select id="statusSelect"
-            class="form-select"
-            [(ngModel)]="selectedStatus">
-        <option *ngFor="let status of statusOptions"
-                [value]="status.value">
-            {{ status.label }}
-        </option>
-    </select>
+  <label for="statusSelect"
+         class="form-label">Select Status:</label>
+  <select id="statusSelect"
+          class="form-select"
+          [(ngModel)]="selectedStatus">
+    <option *ngFor="let status of statusOptions"
+            [value]="status.value">
+      {{ status.label }}
+    </option>
+  </select>
 </div>
 
 <button class="btn btn-success my-2 me-2"
         (click)="onUpdateStatusButtonClick()">
-    Update Status
+  Update Status
 </button>
 
 <button class="btn btn-success my-2"
         [disabled]="!areFiveHospitalsPresent"
         (click)="onInitializeRoundButtonClick()">
-    Initialize round
+  Initialize round
 </button>

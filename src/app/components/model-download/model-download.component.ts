@@ -21,7 +21,7 @@ export class ModelDownloadComponent implements OnInit {
 
   downloadModel(id: number): void {
     this.modelService.downloadModel(id).subscribe((response) => {
-      window.open(response, '_blank');
+      window.open(response.fileUrl, '_blank');
     });
   }
 }
