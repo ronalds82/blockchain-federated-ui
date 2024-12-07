@@ -1,0 +1,207 @@
+{
+  "uuid": "237aca57-8251-4c45-80a9-c7baffd78ff6",
+  "lastMigration": 33,
+  "name": "Demo API",
+  "endpointPrefix": "",
+  "latency": 0,
+  "port": 3000,
+  "hostname": "",
+  "folders": [],
+  "routes": [
+    {
+      "uuid": "57be75a8-2024-44da-8cff-e4adac911ca9",
+      "type": "http",
+      "documentation": "",
+      "method": "get",
+      "endpoint": "hospitals",
+      "responses": [
+        {
+          "uuid": "4f1145ff-d8b0-43fb-bc95-b93d453677d1",
+          "body": "[\r\n  { \"id\": 1, \"name\": \"Hospital A\", \"role\": \"Trainer\", \"hasVoted\": true },\r\n  { \"id\": 2, \"name\": \"Hospital B\", \"role\": \"Miner\", \"hasVoted\": false },\r\n  { \"id\": 2, \"name\": \"Hospital C\", \"role\": \"Miner\", \"hasVoted\": true },\r\n  { \"id\": 2, \"name\": \"Hospital D\", \"role\": \"Miner\", \"hasVoted\": true },\r\n  { \"id\": 2, \"name\": \"Hospital E\", \"role\": \"Trainer\", \"hasVoted\": false },\r\n  { \"id\": 3, \"name\": \"Hospital C\", \"role\": \"Inactive\", \"hasVoted\": false }\r\n]\r\n",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null,
+      "streamingMode": null,
+      "streamingInterval": 0
+    },
+    {
+      "uuid": "d35846a7-2f9e-4d69-a3ac-f4d59546956a",
+      "type": "http",
+      "documentation": "",
+      "method": "post",
+      "endpoint": "upload",
+      "responses": [
+        {
+          "uuid": "c235217d-1a0b-4fe1-90b5-23c8fe76a340",
+          "body": "{\n  \"success\": true,\n  \"message\": \"Model uploaded successfully\"\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null,
+      "streamingMode": null,
+      "streamingInterval": 0
+    },
+    {
+      "uuid": "cb0d426b-989b-45ad-9189-90f5fa8b1bf2",
+      "type": "http",
+      "documentation": "",
+      "method": "get",
+      "endpoint": "models",
+      "responses": [
+        {
+          "uuid": "7a0cf7e5-a0a0-48c2-9854-ebaeb9cdec2a",
+          "body": "[\r\n  {\r\n    \"id\": 1,\r\n    \"version\": \"1.0\",\r\n    \"timestamp\": \"2024-11-19T10:00:00Z\",\r\n    \"isFree\": true\r\n  },\r\n  {\r\n    \"id\": 2,\r\n    \"version\": \"1.1\",\r\n    \"timestamp\": \"2024-11-20T09:00:00Z\",\r\n    \"isFree\": false,\r\n    \"fee\": 50\r\n  }\r\n]\r\n",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null,
+      "streamingMode": null,
+      "streamingInterval": 0
+    },
+    {
+      "uuid": "ac7ae19d-fef1-4a96-a702-5864eb45cd3c",
+      "type": "http",
+      "documentation": "",
+      "method": "post",
+      "endpoint": "download",
+      "responses": [
+        {
+          "uuid": "b5044801-4836-4a73-bd33-77f93c2f96d6",
+          "body": "{\r\n  \"fileUrl\": \"https://mockserver.com/files/model_v2.zip\"\r\n}\r\n",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null,
+      "streamingMode": null,
+      "streamingInterval": 0
+    }
+  ],
+  "rootChildren": [
+    {
+      "type": "route",
+      "uuid": "57be75a8-2024-44da-8cff-e4adac911ca9"
+    },
+    {
+      "type": "route",
+      "uuid": "d35846a7-2f9e-4d69-a3ac-f4d59546956a"
+    },
+    {
+      "type": "route",
+      "uuid": "cb0d426b-989b-45ad-9189-90f5fa8b1bf2"
+    },
+    {
+      "type": "route",
+      "uuid": "ac7ae19d-fef1-4a96-a702-5864eb45cd3c"
+    }
+  ],
+  "proxyMode": false,
+  "proxyHost": "",
+  "proxyRemovePrefix": false,
+  "tlsOptions": {
+    "enabled": false,
+    "type": "CERT",
+    "pfxPath": "",
+    "certPath": "",
+    "keyPath": "",
+    "caPath": "",
+    "passphrase": ""
+  },
+  "cors": true,
+  "headers": [
+    {
+      "key": "Content-Type",
+      "value": "application/json"
+    },
+    {
+      "key": "Access-Control-Allow-Origin",
+      "value": "*"
+    },
+    {
+      "key": "Access-Control-Allow-Methods",
+      "value": "GET,POST,PUT,PATCH,DELETE,HEAD,OPTIONS"
+    },
+    {
+      "key": "Access-Control-Allow-Headers",
+      "value": "Content-Type, Origin, Accept, Authorization, Content-Length, X-Requested-With"
+    }
+  ],
+  "proxyReqHeaders": [
+    {
+      "key": "",
+      "value": ""
+    }
+  ],
+  "proxyResHeaders": [
+    {
+      "key": "",
+      "value": ""
+    }
+  ],
+  "data": [
+    {
+      "uuid": "c4554f36-2b66-455f-93ea-6577c7a479b4",
+      "id": "gp74",
+      "name": "Users",
+      "documentation": "",
+      "value": "[\n  {{#repeat 50}}\n  {\n    \"id\": \"{{faker 'string.uuid'}}\",\n    \"username\": \"{{faker 'internet.userName'}}\"\n  }\n  {{/repeat}}\n]"
+    }
+  ],
+  "callbacks": []
+}

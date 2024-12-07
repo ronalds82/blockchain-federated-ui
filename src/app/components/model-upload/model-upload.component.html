@@ -1,12 +1,20 @@
-<div>
-  <h3>Upload Model Weights</h3>
+<div *ngIf="hospital$ | async as hospital">
+  <h3>Upload model weights</h3>
 
   <input type="file"
-         class="form-control mt-2"
-         (change)="uploadModel($event)" />
+         class="form-control mt-3"
+         (change)="onInputChange($event)" />
+
+  <div class="d-flex justify-content-end mt-2">
+    <button class="btn btn-primary my-2"
+            [disabled]="!file"
+            (click)="uploadModel(hospital)">
+      Upload
+    </button>
+  </div>
 
   <div *ngIf="uploadSuccess"
        class="alert alert-success mt-3">
-    Model uploaded successfully.
+    {{ statusMessage }}
   </div>
 </div>

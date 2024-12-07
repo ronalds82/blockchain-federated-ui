@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { GlobalModelsComponent } from './global-models.component';
+import { VoteComponent } from './vote.component';
 
-describe('GlobalModelsComponent', () => {
-  let component: GlobalModelsComponent;
-  let fixture: ComponentFixture<GlobalModelsComponent>;
+describe('VoteComponent', () => {
+  let component: VoteComponent;
+  let fixture: ComponentFixture<VoteComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [GlobalModelsComponent]
+      imports: [VoteComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(GlobalModelsComponent);
+    fixture = TestBed.createComponent(VoteComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

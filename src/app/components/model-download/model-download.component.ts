@@ -4,12 +4,11 @@ import { ModelService } from '../../services/model.service';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-global-models',
+  selector: 'app-model-download',
   imports: [CommonModule],
-  templateUrl: './global-models.component.html',
-  styleUrls: ['./global-models.component.less'],
+  templateUrl: './model-download.component.html'
 })
-export class GlobalModelsComponent implements OnInit {
+export class ModelDownloadComponent implements OnInit {
   models: GlobalModel[] = [];
 
   constructor(private modelService: ModelService) {}
@@ -20,9 +19,8 @@ export class GlobalModelsComponent implements OnInit {
     });
   }
 
-  downloadModel(modelId: string): void {
-    const data = { hospitalId: 1, modelId };
-    this.modelService.downloadModel(data).subscribe((response) => {
+  downloadModel(id: number): void {
+    this.modelService.downloadModel(id).subscribe((response) => {
       window.open(response.fileUrl, '_blank');
     });
   }

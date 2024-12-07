@@ -1,10 +1,10 @@
 <div>
-  <h3>Global Models</h3>
+  <h3>Download model</h3>
 
   <ul class="list-group mt-3">
     <li *ngFor="let model of models"
         class="list-group-item">
-      <div>{{ model.version }} - {{ model.uploadedBy }} ({{ model.timestamp }})</div>
+      <div>{{ model.version }} - {{ model.timestamp }}</div>
 
       <button class="btn btn-primary float-end"
               (click)="downloadModel(model.id)">

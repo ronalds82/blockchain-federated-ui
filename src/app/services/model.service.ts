@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { GlobalModel } from '../models/global-model.model';
 import { baseUrl } from '../../environment';
-import { SuccessResponse } from '../models/success-response.model';
+import { CustomResponse } from '../models/custom-response.model';
 import { ModelResponse } from '../models/model-response.model';
 
 @Injectable({
@@ -16,11 +16,11 @@ export class ModelService {
     return this.http.get<GlobalModel[]>(`${baseUrl}/models`);
   }
 
-  uploadModel(data: any): Observable<SuccessResponse> {
-    return this.http.post<SuccessResponse>(`${baseUrl}/upload`, data);
+  uploadModel(file: File | null, hospitalId: number): Observable<CustomResponse> {
+    return this.http.post<CustomResponse>(`${baseUrl}/upload`, { file, hospitalId });
   }
 
-  downloadModel(data: any): Observable<ModelResponse> {
-    return this.http.post<ModelResponse>(`${baseUrl}/download`, data);
+  downloadModel(modelId: number): Observable<ModelResponse> {
+    return this.http.post<ModelResponse>(`${baseUrl}/download`, { modelId });
   }
 }

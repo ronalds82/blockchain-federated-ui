@@ -1,7 +1,6 @@
 export interface GlobalModel {
-  id: string;
+  id: number;
   version: string;
-  uploadedBy: string;
   timestamp: string;
   isFree: boolean;
   fee?: number;

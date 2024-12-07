@@ -1,35 +1,30 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RoundStatus } from '../../enums/round-status.enum';
 import { HospitalService } from '../../services/hospital.service';
 import { Observable } from 'rxjs';
-import { HospitalDetails } from '../../models/hospital.model';
-import { FormsModule } from '@angular/forms';
-import { contractAddress as trainingStatusContractAddress, abi as trainingStatusAbi } from '../../../../backend/constants/training_status_contract.js'
-import { ethers } from '../../../../backend/sample_from_tutorial/ethers-5.6.esm.min'; // probably could be gotten as a package instead
+import { Hospital } from '../../models/hospital.model';
+import { abi, contractAddress } from '../../../../backend/sample_from_tutorial/new_contract.js';
+import { ethers } from '../../../../backend/sample_from_tutorial/ethers-5.6.esm.min';
+import { HomeConnectComponent } from './home-connect/home-connect.component';
+import { HomeParticipantsComponent } from './home-participants/home-participants.component';
+import { RoundStatus } from '../../enums/round-status.enum';
 
 @Component({
   selector: 'app-home-component',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, HomeConnectComponent, HomeParticipantsComponent],
   templateUrl: './home.component.html'
 })
 export class HomeComponent implements OnInit {
   connectButtonLabel: string = 'Connect to MetaMask';
   currentStatus: string = '';
-  selectedStatus: Number = RoundStatus.NONE;
-
-  // This was just a quick fix
-  statusOptions = Object.keys(RoundStatus)
-    .filter(key => isNaN(Number(key))) // Filter out numeric keys
-    .map(key => ({ label: key, value: RoundStatus[key as keyof typeof RoundStatus] }));
-
   provider: ethers.providers.Web3Provider | null = null;
   contract: ethers.Contract | null = null;
-
-  hospitals$: Observable<HospitalDetails[]> | null = null;
+  hospitals$: Observable<Hospital[]> | null = null;
+  hospital$: Observable<Hospital | null>;
 
   constructor(private hospitalService: HospitalService) {
     this.hospitals$ = this.getHospitals();
+    this.hospital$ = this.hospitalService.hospital$;
   }
 
   ngOnInit(): void {
@@ -41,7 +36,7 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  async onConnectButtonClick(): Promise<void> {
+  async onConnect(): Promise<void> {
     if (this.provider) {
       try {
         await this.provider.send('eth_requestAccounts', []);
@@ -54,7 +49,7 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  async onGetStatusButtonClick(): Promise<void> {
+  async onGetStatus(): Promise<void> {
     if (this.contract) {
       try {
         const status = await this.contract.getStatus();
@@ -68,26 +63,33 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  async onInitializeRoundClick(): Promise<void> {
-    return;
+  async onInitializeRound(): Promise<void> {
+    return; // TODO: implement after BE is done
   }
 
-  async onUpdateStatusButtonClick(): Promise<void> {
+  async onUpdateStatus(selectedStatus: RoundStatus): Promise<void> {
     if (this.provider && this.contract) {
       try {
         const signer = this.provider.getSigner();
         const signedContract = this.contract.connect(signer);
-        const txResponse = await signedContract.updateStatus(this.selectedStatus);
-
+        const txResponse = await signedContract.updateStatus(selectedStatus);
         await this.listenForTransactionMine(txResponse);
         console.log('Status updated');
-        this.onGetStatusButtonClick();
+        this.onGetStatus();
       } catch (error) {
         console.error('Error updating status:', error);
       }
     } else {
       alert('Please install MetaMask');
     }
+  }
+  
+  async onJoin(): Promise<void> {
+    return; // TODO: implement after BE is done
+  }
+
+  async onLeave(): Promise<void> {
+    return; // TODO: implement after BE is done
   }
 
   private listenForTransactionMine(transactionResponse: ethers.providers.TransactionResponse): Promise<void> {
@@ -100,7 +102,7 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  private getHospitals(): Observable<HospitalDetails[]> {
+  private getHospitals(): Observable<Hospital[]> {
     return this.hospitalService.getHospitals();
   }
 }
