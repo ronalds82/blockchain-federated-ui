@@ -6,9 +6,6 @@ export interface Hospital {
   id: number;
   name?: string;
   role?: Role;
-}
-
-export interface HospitalDetails extends Hospital {
   uploads?: ModelUploadDto[];
   votes?: Vote[];
   hasVoted?: boolean;

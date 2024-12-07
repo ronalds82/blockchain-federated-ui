@@ -1,0 +1,26 @@
+<table class="table table-bordered">
+  <thead class="table-primary">
+    <tr>
+      <th>Participants voted ({{ totalVotes() }} / 5)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let hospital of hospitals">
+      <td *ngIf="hasHospitalVoted(hospital)">{{ hospital.name }}</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="d-flex">
+  <button class="btn btn-primary my-2 me-2 align-self-start"
+          [disabled]="hasHospitalVoted(hospital)"
+          (click)="onVoteButtonClick(VoteValue.Accept)">
+    Accept
+  </button>
+
+  <button class="btn btn-secondary my-2 align-self-end"
+          [disabled]="hasHospitalVoted(hospital)"
+          (click)="onVoteButtonClick(VoteValue.Deny)">
+    Deny
+  </button>
+</div>

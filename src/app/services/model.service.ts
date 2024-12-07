@@ -16,11 +16,11 @@ export class ModelService {
     return this.http.get<GlobalModel[]>(`${baseUrl}/models`);
   }
 
-  uploadModel(data: any): Observable<SuccessResponse> {
-    return this.http.post<SuccessResponse>(`${baseUrl}/upload`, data);
+  uploadModel(file: File | null, hospitalId: number): Observable<SuccessResponse> {
+    return this.http.post<SuccessResponse>(`${baseUrl}/upload`, { file, hospitalId });
   }
 
-  downloadModel(data: any): Observable<ModelResponse> {
-    return this.http.post<ModelResponse>(`${baseUrl}/download`, data);
+  downloadModel(modelId: string): Observable<ModelResponse> {
+    return this.http.post<ModelResponse>(`${baseUrl}/download`, { modelId });
   }
 }

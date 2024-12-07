@@ -5,57 +5,20 @@
 
   <div class="row g-4">
     <div class="col-md-6">
-      <button class="btn btn-primary my-2" (click)="onConnectButtonClick()">
-        {{ connectButtonLabel }}
-      </button>
-
-      <div class="my-3">
-        <span class="fw-bold">Current Status:</span>
-        <span>{{ currentStatus }}</span>
-      </div>
-
-      <button class="btn btn-secondary my-2" (click)="onGetStatusButtonClick()">
-        Get Status
-      </button>
-
-      <div class="my-3">
-        <label for="statusSelect" class="form-label">Select Status:</label>
-        <select id="statusSelect" class="form-select" [(ngModel)]="selectedStatus">
-          <option *ngFor="let status of statusOptions" [value]="status.value">
-            {{ status.label }}
-          </option>
-        </select>
-      </div>
-
-
-      <button class="btn btn-success my-2 me-2" (click)="onUpdateStatusButtonClick()">
-        Update Status
-      </button>
-
-      <button class="btn btn-success my-2" (click)="onInitializeRoundClick()">
-        Initialize round
-      </button>
+      <app-home-connect [hospitals]="hospitals$ | async"
+                        [connectButtonLabel]="connectButtonLabel"
+                        [currentStatus]="currentStatus"
+                        (onConnect)="onConnect()"
+                        (onGetStatus)="onGetStatus()"
+                        (onUpdateStatus)="onUpdateStatus($event)"
+                        (onInitializeRound)="onInitializeRound()">
+      </app-home-connect>
     </div>
-
     <div class="col-md-6">
-      <ng-container *ngIf="hospitals$ | async as hospitals; else noParticipants">
-        <table class="table table-bordered">
-          <thead class="table-primary">
-            <tr>
-              <th>Participants ({{ hospitals.length }} / 5)</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let hospital of hospitals">
-              <td>{{ hospital.name }}</td>
-            </tr>
-          </tbody>
-        </table>
-      </ng-container>
-
-      <ng-template #noParticipants>
-        <strong>No participants</strong>
-      </ng-template>
+      <app-home-participants [hospitals]="hospitals$ | async"
+                             (onJoin)="onJoin()"
+                             (onLeave)="onLeave()">
+      </app-home-participants>
     </div>
   </div>
 </div>

@@ -1,0 +1,14 @@
+<div class="container my-4 p-4 bg-light rounded shadow-sm">
+  <div class="text-center mb-4">
+    <h2 class="text-primary">Vote for a model</h2>
+  </div>
+
+  <div class="row g-4">
+    <div class="col-12">
+      <app-vote-view [hospitals]="hospitals$ | async"
+                     [hospital]="hospital$ | async"
+                     (onVote)="onVote($event)">
+      </app-vote-view>
+    </div>
+  </div>
+</div>

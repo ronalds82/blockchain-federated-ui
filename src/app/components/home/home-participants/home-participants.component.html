@@ -1,0 +1,26 @@
+<ng-container *ngIf="hospitals?.length; else noParticipants">
+    <table class="table table-bordered">
+        <thead class="table-primary">
+            <tr>
+                <th>Participants ({{ hospitals?.length }} / 5)</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr *ngFor="let hospital of hospitals">
+                <td>{{ hospital.name }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="d-flex justify-content-end">
+        <button class="btn btn-primary my-2 me-2"
+                (click)="onJoinButtonClick()">Join</button>
+        <button class="btn btn-secondary my-2"
+                (click)="onLeaveButtonClick()">Leave</button>
+    </div>
+</ng-container>
+
+<ng-template #noParticipants>
+    <strong>No participants</strong>
+</ng-template>
