@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Hospital } from '../../../models/hospital.model';
 import { VoteValue } from '../../../enums/vote-value.enum';
+import { Role } from '../../../enums/role.enum';
 
 @Component({
   selector: 'app-vote-view',
@@ -15,6 +16,10 @@ export class VoteViewComponent {
   @Input() hospital: Hospital | null = null;
 
   @Output() onVote = new EventEmitter<VoteValue>();
+
+  get isVoteButtonDisabled(): boolean {
+    return this.hospital?.role !== Role.Miner || this.hasHospitalVoted(this.hospital);
+  }
 
   totalVotes(): number {
     let totalVotes = 0;

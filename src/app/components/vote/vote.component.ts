@@ -13,7 +13,7 @@ import { VoteValue } from '../../enums/vote-value.enum';
 })
 export class VoteComponent {
   hospitals$: Observable<Hospital[]> | null = null;
-  hospital$: Observable<Hospital> | null = null;
+  hospital$: Observable<Hospital | null>;
   
   constructor(private hospitalService: HospitalService) {
     this.hospitals$ = this.hospitalService.getHospitals();

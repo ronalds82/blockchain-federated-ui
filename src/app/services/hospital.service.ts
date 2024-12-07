@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, Subject } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { Hospital } from '../models/hospital.model';
 import { baseUrl } from '../../environment';
 
@@ -8,7 +8,9 @@ import { baseUrl } from '../../environment';
   providedIn: 'root',
 })
 export class HospitalService {
-  hospital$ = new Subject<Hospital>();
+  private selectedHospitalSubject = new BehaviorSubject<Hospital | null>(this.getHospitalFromStorage());
+
+  hospital$ = this.selectedHospitalSubject.asObservable();
 
   constructor(private http: HttpClient) {}
 
@@ -17,6 +19,20 @@ export class HospitalService {
   }
 
   setHospital(hospital: Hospital): void {
-    this.hospital$.next(hospital);
+    this.selectedHospitalSubject.next(hospital);
+    this.saveHospitalToStorage(hospital);
+  }
+
+  getSelectedHospital(): Hospital | null {
+    return this.selectedHospitalSubject.value;
+  }
+
+  private saveHospitalToStorage(hospital: Hospital): void {
+    localStorage.setItem('selectedHospital', JSON.stringify(hospital));
+  }
+
+  private getHospitalFromStorage(): Hospital | null {
+    const hospitalJson = localStorage.getItem('selectedHospital');
+    return hospitalJson ? JSON.parse(hospitalJson) : null;
   }
 }

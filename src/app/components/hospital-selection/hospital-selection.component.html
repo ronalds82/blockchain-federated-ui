@@ -4,6 +4,9 @@
   <select id="hospitalSelect"
           class="form-select mt-2"
           (change)="onHospitalSelect($event)">
+    <option value=""
+            disabled
+            selected>Select a hospital</option>
     <option *ngFor="let hospital of hospitals"
             [value]="hospital.id">
       {{ hospital.name }} ({{ hospital.role }})

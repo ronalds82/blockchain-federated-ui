@@ -2,21 +2,23 @@
     <table class="table table-bordered">
         <thead class="table-primary">
             <tr>
-                <th>Participants ({{ hospitals?.length }} / 5)</th>
+                <th>Participants ({{ totalParticipants() }} / 5)</th>
             </tr>
         </thead>
 
         <tbody>
             <tr *ngFor="let hospital of hospitals">
-                <td>{{ hospital.name }}</td>
+                <td *ngIf="hasHospitalJoined(hospital)">{{ hospital.name }}</td>
             </tr>
         </tbody>
     </table>
 
     <div class="d-flex justify-content-end">
         <button class="btn btn-primary my-2 me-2"
+                [disabled]="hasHospitalJoined(hospital)"
                 (click)="onJoinButtonClick()">Join</button>
         <button class="btn btn-secondary my-2"
+                [disabled]="hasHospitalJoined(hospital)"
                 (click)="onLeaveButtonClick()">Leave</button>
     </div>
 </ng-container>

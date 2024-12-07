@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Hospital } from '../../../models/hospital.model';
 import { CommonModule } from '@angular/common';
+import { Role } from '../../../enums/role.enum';
 
 @Component({
   selector: 'app-home-participants',
@@ -9,9 +10,26 @@ import { CommonModule } from '@angular/common';
 })
 export class HomeParticipantsComponent {
   @Input() hospitals: Hospital[] | null = [];
+  @Input() hospital: Hospital | null = null;
   
   @Output() onJoin = new EventEmitter<void>();
   @Output() onLeave = new EventEmitter<void>();
+
+  totalParticipants(): number {
+    let totalParticipants = 0;
+
+    this.hospitals?.forEach(hospital => {
+      if(this.hasHospitalJoined(hospital)) {
+        totalParticipants++;
+      }
+    });
+
+    return totalParticipants;
+  }
+
+  hasHospitalJoined(hospital: Hospital | null): boolean {
+    return hospital?.role !== Role.Inactive;
+  }
 
   onJoinButtonClick(): void {
     this.onJoin.emit();

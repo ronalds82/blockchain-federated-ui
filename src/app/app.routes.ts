@@ -5,6 +5,14 @@ import { ModelDownloadComponent } from './components/model-download/model-downlo
 import { HomeComponent } from './components/home/home.component';
 import { VoteComponent } from './components/vote/vote.component';
 
+export enum paths {
+  HomePath = 'home',
+  HospitalsPath = 'hospitals',
+  UploadPath = 'upload',
+  DownloadPath = 'download',
+  VotePath = 'vote'
+}
+
 export const routes: Routes = [
   { path: '', redirectTo: '/hospitals', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },

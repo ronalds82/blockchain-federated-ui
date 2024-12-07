@@ -13,8 +13,9 @@ import { Hospital } from '../../models/hospital.model';
 })
 export class ModelUploadComponent {
   file: File | null = null;
-  hospital$: Observable<Hospital> | null = null;
+  hospital$: Observable<Hospital | null>;
   uploadSuccess = false;
+  statusMessage: string = ''
 
   constructor(
     private modelService: ModelService,
@@ -34,6 +35,9 @@ export class ModelUploadComponent {
   }
 
   uploadModel(hospital: Hospital): void {
-    this.modelService.uploadModel(this.file, hospital.id).subscribe(() => this.uploadSuccess = true);
+    this.modelService.uploadModel(this.file, hospital.id).subscribe((response) => {
+      this.uploadSuccess = response.success;
+      this.statusMessage = response.message;
+    });
   }
 }

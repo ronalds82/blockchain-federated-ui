@@ -20,9 +20,11 @@ export class HomeComponent implements OnInit {
   provider: ethers.providers.Web3Provider | null = null;
   contract: ethers.Contract | null = null;
   hospitals$: Observable<Hospital[]> | null = null;
+  hospital$: Observable<Hospital | null>;
 
   constructor(private hospitalService: HospitalService) {
     this.hospitals$ = this.getHospitals();
+    this.hospital$ = this.hospitalService.hospital$;
   }
 
   ngOnInit(): void {
