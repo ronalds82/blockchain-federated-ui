@@ -10,6 +10,13 @@ import { RoundStatus } from '../../../enums/round-status.enum';
   templateUrl: './home-connect.component.html'
 })
 export class HomeConnectComponent {
+  readonly statusName: string[] = [
+    'None',
+    'Waiting for participants',
+    'Start training',
+    'Training completed'
+  ];
+
   @Input() hospitals: Hospital[] | null = []; 
   @Input() connectButtonLabel!: string;
   @Input() currentStatus!: string;
@@ -23,7 +30,10 @@ export class HomeConnectComponent {
 
   statusOptions = Object.keys(RoundStatus)
     .filter(key => isNaN(Number(key)))
-    .map(key => ({ label: key, value: RoundStatus[key as keyof typeof RoundStatus] }));
+    .map(key => ({ 
+      label: this.statusName[RoundStatus[key as keyof typeof RoundStatus]], 
+      value: RoundStatus[key as keyof typeof RoundStatus] 
+    }));
 
   get areFiveHospitalsPresent(): boolean {
     return !!this.hospitals?.length && this.hospitals?.length > 5;
