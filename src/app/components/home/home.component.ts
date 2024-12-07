@@ -30,7 +30,7 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     if (window.ethereum) {
       this.provider = new ethers.providers.Web3Provider(window.ethereum);
-      this.contract = new ethers.Contract(contractAddress, abi, this.provider);
+      this.contract = new ethers.Contract(trainingStatusContractAddress, trainingStatusAbi, this.provider);
     } else {
       this.connectButtonLabel = 'Please install MetaMask';
     }
