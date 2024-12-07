@@ -11,7 +11,8 @@
                         (onConnect)="onConnect()"
                         (onGetStatus)="onGetStatus()"
                         (onUpdateStatus)="onUpdateStatus($event)"
-                        (onInitializeRound)="onInitializeRound()">
+                        (onInitializeRound)="onUpdateStatus(RoundStatus.WAITING_FOR_PARTICPANTS)"
+                        (onStartTraining)="onUpdateStatus(RoundStatus.START_TRAINING)">
       </app-home-connect>
     </div>
     <div class="col-md-6">

@@ -28,7 +28,7 @@ export class HomeParticipantsComponent {
   }
 
   hasHospitalJoined(hospital: Hospital | null): boolean {
-    return hospital?.role !== Role.Inactive;
+    return hospital?.role === Role.Miner || hospital?.role === Role.Trainer;
   }
 
   onJoinButtonClick(): void {

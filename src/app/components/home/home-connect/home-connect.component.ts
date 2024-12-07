@@ -19,12 +19,13 @@ export class HomeConnectComponent {
 
   @Input() hospitals: Hospital[] | null = []; 
   @Input() connectButtonLabel!: string;
-  @Input() currentStatus!: string;
+  @Input() currentStatus!: RoundStatus | null;
 
   @Output() onConnect = new EventEmitter<void>();
   @Output() onGetStatus = new EventEmitter<void>();
   @Output() onUpdateStatus = new EventEmitter<RoundStatus>();
   @Output() onInitializeRound = new EventEmitter<void>();
+  @Output() onStartTraining = new EventEmitter<void>();
 
   selectedStatus: RoundStatus = RoundStatus.NONE;
 
@@ -35,8 +36,12 @@ export class HomeConnectComponent {
       value: RoundStatus[key as keyof typeof RoundStatus] 
     }));
 
-  get areFiveHospitalsPresent(): boolean {
-    return !!this.hospitals?.length && this.hospitals?.length > 5;
+  get isStartTrainingButtonEnabled(): boolean {
+    return !!this.hospitals?.length && this.hospitals?.length >= 5 && this.currentStatus === RoundStatus.WAITING_FOR_PARTICPANTS;
+  }
+
+  get isRoundStatusNone(): boolean {
+    return this.currentStatus === RoundStatus.NONE;
   }
 
   onConnectButtonClick(): void {
@@ -53,5 +58,9 @@ export class HomeConnectComponent {
 
   onInitializeRoundButtonClick(): void {
     this.onInitializeRound.emit();
+  }
+
+  onStartTrainingButtonClick(): void {
+    this.onStartTraining.emit();
   }
 }

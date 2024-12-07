@@ -18,7 +18,7 @@
             [disabled]="hasHospitalJoined(hospital)"
             (click)="onJoinButtonClick()">Join</button>
     <button class="btn btn-secondary my-2"
-            [disabled]="hasHospitalJoined(hospital)"
+            [disabled]="!hasHospitalJoined(hospital)"
             (click)="onLeaveButtonClick()">Leave</button>
   </div>
 </ng-container>
