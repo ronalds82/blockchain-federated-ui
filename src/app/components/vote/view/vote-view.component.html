@@ -13,13 +13,13 @@
 
 <div class="d-flex">
   <button class="btn btn-primary my-2 me-2 align-self-start"
-          [disabled]="isVoteButtonDisabled"
+          [disabled]="!isVoteButtonEnabled"
           (click)="onVoteButtonClick(VoteValue.Accept)">
     Accept
   </button>
 
   <button class="btn btn-secondary my-2 align-self-end"
-          [disabled]="isVoteButtonDisabled"
+          [disabled]="!isVoteButtonEnabled"
           (click)="onVoteButtonClick(VoteValue.Deny)">
     Deny
   </button>

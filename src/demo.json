@@ -17,7 +17,7 @@
       "responses": [
         {
           "uuid": "4f1145ff-d8b0-43fb-bc95-b93d453677d1",
-          "body": "[\r\n  { \"id\": 1, \"name\": \"Hospital A\", \"role\": \"Trainer\", \"hasVoted\": true },\r\n  { \"id\": 2, \"name\": \"Hospital B\", \"role\": \"Miner\", \"hasVoted\": false },\r\n  { \"id\": 2, \"name\": \"Hospital C\", \"role\": \"Miner\", \"hasVoted\": true },\r\n  { \"id\": 2, \"name\": \"Hospital D\", \"role\": \"Miner\", \"hasVoted\": true },\r\n  { \"id\": 2, \"name\": \"Hospital E\", \"role\": \"Trainer\", \"hasVoted\": false },\r\n  { \"id\": 3, \"name\": \"Hospital C\", \"role\": \"Inactive\", \"hasVoted\": false }\r\n]\r\n",
+          "body": "[\r\n  { \"id\": 1, \"name\": \"Hospital A\", \"role\": \"Trainer\", \"hasVoted\": true },\r\n  { \"id\": 2, \"name\": \"Hospital B\", \"role\": \"Miner\", \"hasVoted\": false },\r\n  { \"id\": 3, \"name\": \"Hospital C\", \"role\": \"Miner\", \"hasVoted\": true },\r\n  { \"id\": 4, \"name\": \"Hospital D\", \"role\": \"Miner\", \"hasVoted\": true },\r\n  { \"id\": 5, \"name\": \"Hospital E\", \"role\": \"Trainer\", \"hasVoted\": false },\r\n  { \"id\": 3, \"name\": \"Hospital C\", \"role\": \"Inactive\", \"hasVoted\": false }\r\n]\r\n",
           "latency": 0,
           "statusCode": 200,
           "label": "",

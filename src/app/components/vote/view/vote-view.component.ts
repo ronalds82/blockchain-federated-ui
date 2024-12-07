@@ -17,8 +17,9 @@ export class VoteViewComponent {
 
   @Output() onVote = new EventEmitter<VoteValue>();
 
-  get isVoteButtonDisabled(): boolean {
-    return this.hospital?.role !== Role.Miner || this.hasHospitalVoted(this.hospital);
+  get isVoteButtonEnabled(): boolean {
+    console.log(this.hospital);
+    return this.hospital?.role === Role.Miner && !this.hasHospitalVoted(this.hospital);
   }
 
   totalVotes(): number {
