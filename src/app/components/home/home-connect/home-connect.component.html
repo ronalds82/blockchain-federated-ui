@@ -31,8 +31,14 @@
   Update Status
 </button>
 
-<button class="btn btn-success my-2"
-        [disabled]="!areFiveHospitalsPresent"
+<button class="btn btn-success my-2 me-2"
+        [disabled]="!isRoundStatusNone"
         (click)="onInitializeRoundButtonClick()">
   Initialize round
+</button>
+
+<button class="btn btn-success my-2"
+        [disabled]="!isStartTrainingButtonEnabled"
+        (click)="onStartTrainingButtonClick()">
+  Start training
 </button>

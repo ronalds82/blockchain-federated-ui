@@ -15,8 +15,10 @@ import { RoundStatus } from '../../enums/round-status.enum';
   templateUrl: './home.component.html'
 })
 export class HomeComponent implements OnInit {
+  readonly RoundStatus = RoundStatus;
+
   connectButtonLabel: string = 'Connect to MetaMask';
-  currentStatus: string = '';
+  currentStatus: RoundStatus | null = null;
   provider: ethers.providers.Web3Provider | null = null;
   contract: ethers.Contract | null = null;
   hospitals$: Observable<Hospital[]> | null = null;
@@ -61,10 +63,6 @@ export class HomeComponent implements OnInit {
     } else {
       alert('Please install MetaMask');
     }
-  }
-
-  async onInitializeRound(): Promise<void> {
-    return; // TODO: implement after BE is done
   }
 
   async onUpdateStatus(selectedStatus: RoundStatus): Promise<void> {
