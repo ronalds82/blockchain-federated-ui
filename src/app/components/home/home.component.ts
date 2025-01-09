@@ -129,15 +129,21 @@ export class HomeComponent implements OnInit {
   }
 
   async onInitializeRound(): Promise<void> {
+    this.actionInProgress = true;
+
     try {
       this.onUpdateStatus(RoundStatus.WAITING_FOR_PARTICPANTS);
       this.onJoin();
     } catch (error) {
       console.error('Error initializing round:', error);
     }
+
+    this.actionInProgress = false;
   }
 
   async onStartTraining(addresses: string[]): Promise<void> {
+    this.actionInProgress = true;
+
     try {
       const hospitals = this.getHospitals();
       // Make at least half of the participants miners, the rest trainers; roles assigned randomly
@@ -152,6 +158,8 @@ export class HomeComponent implements OnInit {
     } catch (error) {
       console.error('Error starting training:', error);
     }
+
+    this.actionInProgress = false;
   }
 
   private listenForTransactionMine(transactionResponse: ethers.providers.TransactionResponse): Promise<void> {
