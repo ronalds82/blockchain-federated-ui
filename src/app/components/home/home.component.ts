@@ -4,6 +4,7 @@ import { HospitalService } from '../../services/hospital.service';
 import { Observable } from 'rxjs';
 import { Hospital } from '../../models/hospital.model';
 import { contractAddress as trainingStatusContractAddress, abi as trainingStatusAbi } from '../../../../backend/constants/training_status_contract.js'
+import { contractAddress as hospitalsContractAddress, abi as hospitalsAbi } from '../../../../backend/constants/hopsital_contract.js'
 import { ethers } from '../../../../backend/sample_from_tutorial/ethers-5.6.esm.min'; // TODO just replace this with ether nmp package, will have to do some refactoring though
 import { HomeConnectComponent } from './home-connect/home-connect.component';
 import { HomeParticipantsComponent } from './home-participants/home-participants.component';
@@ -21,6 +22,7 @@ export class HomeComponent implements OnInit {
   currentStatus: RoundStatus | null = null;
   provider: ethers.providers.Web3Provider | null = null;
   contract: ethers.Contract | null = null;
+  hospitalsContract: ethers.Contract | null = null;
   hospitals$: Observable<Hospital[]> | null = null;
   hospital$: Observable<Hospital | null>;
 
@@ -33,6 +35,7 @@ export class HomeComponent implements OnInit {
     if (window.ethereum) {
       this.provider = new ethers.providers.Web3Provider(window.ethereum);
       this.contract = new ethers.Contract(trainingStatusContractAddress, trainingStatusAbi, this.provider);
+      this.hospitalsContract = new ethers.Contract(hospitalsContractAddress, hospitalsAbi, this.provider);
     } else {
       this.connectButtonLabel = 'Please install MetaMask';
     }
@@ -83,11 +86,40 @@ export class HomeComponent implements OnInit {
   }
 
   async onJoin(): Promise<void> {
-    return; // TODO: implement after BE is done
+    if (this.provider && this.hospitalsContract) {
+      try {
+        const signer = this.provider.getSigner();
+        const signedContract = this.hospitalsContract.connect(signer);
+        const txResponse = await signedContract.join();
+        await this.listenForTransactionMine(txResponse);
+        const participants = await signedContract.getAllHospitals();
+        console.log('Current participants:', participants);
+      } catch (error) {
+        console.error('Error updating status:', error);
+      }
+    } else {
+      alert('Please install MetaMask');
+    }
+    return;
   }
 
   async onLeave(): Promise<void> {
-    return; // TODO: implement after BE is done
+    console.log('About to leave');
+    if (this.provider && this.hospitalsContract) {
+      try {
+        const signer = this.provider.getSigner();
+        const signedContract = this.hospitalsContract.connect(signer);
+        const txResponse = await signedContract.removeHospitalFromTrainingRound();        
+        await this.listenForTransactionMine(txResponse);
+        const participants = await signedContract.getAllHospitals();
+        console.log('Current participants:', participants);
+      } catch (error) {
+        console.error('Error updating status:', error);
+      }
+    } else {
+      alert('Please install MetaMask');
+    }
+    return;
   }
 
   private listenForTransactionMine(transactionResponse: ethers.providers.TransactionResponse): Promise<void> {

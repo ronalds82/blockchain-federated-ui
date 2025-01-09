@@ -27,6 +27,9 @@ contract HospitalManager {
     // Keep an array of addresses so we can retrieve all participants easily
     address[] private hospitalAddresses;
 
+    // Hospitals that have joined the training round
+    address[] private currentParticipants;
+
     // Event emitted when a hospital joins the training round
     event HospitalCreated(
         address indexed hospitalAddress,
@@ -56,23 +59,24 @@ contract HospitalManager {
         emit HospitalCreated(msg.sender, _name, _role, Vote.Null);
     }
 
+    event ParticipantJoined(address indexed hospitalAddress);
+    
+    function join() public {
+        currentParticipants.push(msg.sender);
+        emit ParticipantJoined(msg.sender);
+    }
+
     // Event emitted when a hospital leaves the training round
     event HospitalRemoved(address indexed hospitalAddress);
 
     function removeHospitalFromTrainingRound() external {
-        // Ensure the caller is currently joined (role != Null)
-        require(
-            hospitals[msg.sender].role != Role.Null,
-            "Hospital not joined."
-        );
-
         // Remove from the array by swapping and popping
-        for (uint256 i = 0; i < hospitalAddresses.length; i++) {
-            if (hospitalAddresses[i] == msg.sender) {
-                hospitalAddresses[i] = hospitalAddresses[
-                    hospitalAddresses.length - 1
+        for (uint256 i = 0; i < currentParticipants.length; i++) {
+            if (currentParticipants[i] == msg.sender) {
+                currentParticipants[i] = currentParticipants[
+                    currentParticipants.length - 1
                 ];
-                hospitalAddresses.pop();
+                currentParticipants.pop();
                 break;
             }
         }
