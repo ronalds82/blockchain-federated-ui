@@ -68,9 +68,11 @@ export class HomeComponent implements OnInit {
         const signer = this.provider.getSigner();
         const signedContract = this.hospitalsContract.connect(signer);
         const txResponse = await signedContract.setRole(Role.PARTICIPANT);
-        const selectedHospital = this.hospitalService.getHospitalFromStorage();
-        selectedHospital?.role === Role.PARTICIPANT;
-        this.hospitalService.setHospital(selectedHospital);
+        let selectedHospital = this.hospitalService.getHospitalFromStorage();
+        if (selectedHospital) {
+          selectedHospital.role = Role.PARTICIPANT;
+          this.hospitalService.setHospital(selectedHospital);
+        }
         await this.listenForTransactionMine(txResponse);
         this.hospitals$ = this.getHospitals();
       } catch (error) {
@@ -88,9 +90,11 @@ export class HomeComponent implements OnInit {
         const signer = this.provider.getSigner();
         const signedContract = this.hospitalsContract.connect(signer);
         const txResponse = await signedContract.setRole(Role.NULL);
-        const selectedHospital = this.hospitalService.getHospitalFromStorage();
-        selectedHospital?.role === Role.NULL;
-        this.hospitalService.setHospital(selectedHospital);       
+        let selectedHospital = this.hospitalService.getHospitalFromStorage();
+        if (selectedHospital) {
+          selectedHospital.role = Role.NULL;
+          this.hospitalService.setHospital(selectedHospital);
+        }
         await this.listenForTransactionMine(txResponse);
         this.hospitals$ = this.getHospitals();
       } catch (error) {
