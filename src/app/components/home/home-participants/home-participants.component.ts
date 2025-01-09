@@ -30,7 +30,7 @@ export class HomeParticipantsComponent {
   }
 
   hasHospitalJoined(hospital: Hospital | null): boolean {
-    return hospital?.role === Role.PARTICIPANT
+    return hospital?.role === Role.PARTICIPANT;
   }
 
   onJoinButtonClick(): void {

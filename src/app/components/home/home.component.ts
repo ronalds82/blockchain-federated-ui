@@ -19,7 +19,7 @@ import { Role } from '../../enums/role.enum';
 export class HomeComponent implements OnInit {
   readonly RoundStatus = RoundStatus;
 
-  currentStatus: RoundStatus | null = null;
+  currentStatus!: number;
   provider: ethers.providers.Web3Provider | null = null;
   contract: ethers.Contract | null = null;
   hospitalsContract: ethers.Contract | null = null;
@@ -46,8 +46,7 @@ export class HomeComponent implements OnInit {
 
     try {
       const status = await this.contract.getStatus();
-      this.currentStatus = status;
-      console.log('Current Status:', status);
+      this.currentStatus = RoundStatus[status as keyof typeof RoundStatus];
     } catch (error) {
       console.error('Error getting status:', error);
     }

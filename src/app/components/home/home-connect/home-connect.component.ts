@@ -19,7 +19,7 @@ export class HomeConnectComponent {
   ];
 
   @Input() hospitals: Hospital[] | null = []; 
-  @Input() currentStatus!: RoundStatus | null;
+  @Input() currentStatus!: number;
   @Input() actionInProgress: boolean = false;
 
   @Output() onGetStatus = new EventEmitter<void>();
@@ -35,6 +35,10 @@ export class HomeConnectComponent {
       label: this.statusName[RoundStatus[key as keyof typeof RoundStatus]], 
       value: RoundStatus[key as keyof typeof RoundStatus] 
     }));
+
+  get currentStatusName(): string {
+    return this.statusOptions.filter((status) => status.value === this.currentStatus)[0]?.label;
+  }
 
   get isStartTrainingButtonEnabled(): boolean {
     return !!this.hospitals?.length && this.hospitals?.length >= 5 && this.currentStatus === RoundStatus.WAITING_FOR_PARTICPANTS;
