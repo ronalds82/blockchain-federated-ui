@@ -15,7 +15,7 @@
 
   <div class="d-flex justify-content-end">
     <button class="btn btn-primary my-2 me-2"
-            [disabled]="hasHospitalJoined(hospital)"
+            [disabled]="hasHospitalJoined(hospital) || actionInProgress"
             (click)="onJoinButtonClick()">
       @if(actionInProgress) {
       <app-spinner></app-spinner>
@@ -24,7 +24,7 @@
       }
     </button>
     <button class="btn btn-secondary my-2"
-            [disabled]="!hasHospitalJoined(hospital)"
+            [disabled]="!hasHospitalJoined(hospital) || actionInProgress"
             (click)="onLeaveButtonClick()">
       @if(actionInProgress) {
       <app-spinner></app-spinner>
