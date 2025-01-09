@@ -18,14 +18,24 @@
 
       <button type="submit"
               class="btn btn-primary mt-2">
-        Register
+        @if(actionInProgress) {
+        <app-spinner></app-spinner>
+        } @else {
+        <span>Register</span>
+        }
       </button>
     </form>
   </div>
 
+  @if(hospitalsLoading) {
+  <app-spinner></app-spinner>
+  } @else {
   <div class="mt-3">
     <h2 for="hospitalSelect">Or select a Hospital:</h2>
 
+    @if(actionInProgress) {
+    <app-spinner></app-spinner>
+    } @else {
     <select id="hospitalSelect"
             class="form-select mt-2"
             (change)="onHospitalSelect($event)">
@@ -37,5 +47,7 @@
         {{ hospital.name }} {{(hospital.hospitalWalletAddress) }}
       </option>
     </select>
+    }
   </div>
+  }
 </div>

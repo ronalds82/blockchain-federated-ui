@@ -3,10 +3,11 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Hospital } from '../../../models/hospital.model';
 import { RoundStatus } from '../../../enums/round-status.enum';
+import { SpinnerComponent } from '../../spinner/spinner.component';
 
 @Component({
   selector: 'app-home-connect',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, SpinnerComponent],
   templateUrl: './home-connect.component.html'
 })
 export class HomeConnectComponent {
@@ -19,6 +20,7 @@ export class HomeConnectComponent {
 
   @Input() hospitals: Hospital[] | null = []; 
   @Input() currentStatus!: RoundStatus | null;
+  @Input() actionInProgress: boolean = false;
 
   @Output() onGetStatus = new EventEmitter<void>();
   @Output() onUpdateStatus = new EventEmitter<RoundStatus>();

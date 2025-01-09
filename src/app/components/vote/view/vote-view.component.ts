@@ -3,10 +3,11 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Hospital } from '../../../models/hospital.model';
 import { VoteValue } from '../../../enums/vote-value.enum';
 import { Role } from '../../../enums/role.enum';
+import { SpinnerComponent } from '../../spinner/spinner.component';
 
 @Component({
   selector: 'app-vote-view',
-  imports: [CommonModule],
+  imports: [CommonModule, SpinnerComponent],
   templateUrl: './vote-view.component.html'
 })
 export class VoteViewComponent {
@@ -14,13 +15,12 @@ export class VoteViewComponent {
 
   @Input() hospitals: Hospital[] | null = [];
   @Input() hospital: Hospital | null = null;
+  @Input() voteInProgress: boolean = false;
 
   @Output() onVote = new EventEmitter<VoteValue>();
 
   get isVoteButtonEnabled(): boolean {
-    // Uncomment later
-    // return this.hospital?.role === Role.MINER && !this.hasHospitalVoted(this.hospital);
-    return true
+    return this.hospital?.role === Role.MINER && !this.hasHospitalVoted(this.hospital);
   }
 
   totalVotes(): number {
@@ -36,8 +36,7 @@ export class VoteViewComponent {
   }
 
   hasHospitalVoted(hospital: Hospital | null): boolean {
-    // return hospital?.vote != Role.NULL;
-    return true
+    return hospital?.vote !== VoteValue.NULL;
   }
 
   onVoteButtonClick(vote: VoteValue): void {

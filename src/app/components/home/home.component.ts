@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { Hospital } from '../../models/hospital.model';
 import { contractAddress as trainingStatusContractAddress, abi as trainingStatusAbi } from '../../../../backend/constants/training_status_contract.js'
 import { contractAddress as hospitalsContractAddress, abi as hospitalsAbi } from '../../../../backend/constants/hopsital_contract.js'
-import { ethers } from '../../../../backend/sample_from_tutorial/ethers-5.6.esm.min'; // TODO just replace this with ether nmp package, will have to do some refactoring though
+import { ethers } from '../../../../backend/sample_from_tutorial/ethers-5.6.esm.min';
 import { HomeConnectComponent } from './home-connect/home-connect.component';
 import { HomeParticipantsComponent } from './home-participants/home-participants.component';
 import { RoundStatus } from '../../enums/round-status.enum';
@@ -25,6 +25,7 @@ export class HomeComponent implements OnInit {
   hospitalsContract: ethers.Contract | null = null;
   hospitals$: Observable<Hospital[]> | null = null;
   hospital$: Observable<Hospital | null>;
+  actionInProgress = false;
 
   constructor(private hospitalService: HospitalService) {
     this.hospitals$ = this.getHospitals();
@@ -36,10 +37,13 @@ export class HomeComponent implements OnInit {
       this.provider = new ethers.providers.Web3Provider(window.ethereum);
       this.contract = new ethers.Contract(trainingStatusContractAddress, trainingStatusAbi, this.provider);
       this.hospitalsContract = new ethers.Contract(hospitalsContractAddress, hospitalsAbi, this.provider);
-    }
+      this.onGetStatus();
+    } 
   }
 
   async onGetStatus(): Promise<void> {
+    this.actionInProgress = true;
+
     try {
       const status = await this.contract.getStatus();
       this.currentStatus = status;
@@ -47,9 +51,13 @@ export class HomeComponent implements OnInit {
     } catch (error) {
       console.error('Error getting status:', error);
     }
+
+    this.actionInProgress = false;
   }
 
   async onUpdateStatus(selectedStatus: RoundStatus): Promise<void> {
+    this.actionInProgress = true;
+
     try {
       const signer = this.provider.getSigner();
       const signedContract = this.contract.connect(signer);
@@ -60,19 +68,25 @@ export class HomeComponent implements OnInit {
     } catch (error) {
       console.error('Error updating status:', error);
     }
+
+    this.actionInProgress = false;
   }
 
   async onJoin(): Promise<void> {
+    this.actionInProgress = true;
+
     if (this.provider && this.hospitalsContract) {
       try {
         const signer = this.provider.getSigner();
         const signedContract = this.hospitalsContract.connect(signer);
         const txResponse = await signedContract.setRole(Role.PARTICIPANT);
+
         let selectedHospital = this.hospitalService.getHospitalFromStorage();
         if (selectedHospital) {
           selectedHospital.role = Role.PARTICIPANT;
           this.hospitalService.setHospital(selectedHospital);
         }
+
         await this.listenForTransactionMine(txResponse);
         this.hospitals$ = this.getHospitals();
       } catch (error) {
@@ -81,20 +95,26 @@ export class HomeComponent implements OnInit {
     } else {
       alert('Please install MetaMask');
     }
+    
+    this.actionInProgress = false;
     return;
   }
 
   async onLeave(): Promise<void> {
+    this.actionInProgress = true;
+
     if (this.provider && this.hospitalsContract) {
       try {
         const signer = this.provider.getSigner();
         const signedContract = this.hospitalsContract.connect(signer);
         const txResponse = await signedContract.setRole(Role.NULL);
+
         let selectedHospital = this.hospitalService.getHospitalFromStorage();
         if (selectedHospital) {
           selectedHospital.role = Role.NULL;
           this.hospitalService.setHospital(selectedHospital);
         }
+
         await this.listenForTransactionMine(txResponse);
         this.hospitals$ = this.getHospitals();
       } catch (error) {
@@ -103,6 +123,8 @@ export class HomeComponent implements OnInit {
     } else {
       alert('Please install MetaMask');
     }
+    
+    this.actionInProgress = false;
     return;
   }
 

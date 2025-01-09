@@ -5,11 +5,13 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { paths } from '../../app.routes';
 import { FormsModule } from '@angular/forms';
-import { ethers } from '../../../../backend/sample_from_tutorial/ethers-5.6.esm.min'; // TODO just replace this with ether nmp package, will have to do some refactoring though
+import { ethers } from '../../../../backend/sample_from_tutorial/ethers-5.6.esm.min';
+import { finalize } from 'rxjs';
+import { SpinnerComponent } from '../spinner/spinner.component';
 
 @Component({
   selector: 'app-hospital-selection',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, SpinnerComponent],
   templateUrl: './hospital-selection.component.html'
 })
 export class HospitalSelectionComponent implements OnInit {
@@ -19,6 +21,8 @@ export class HospitalSelectionComponent implements OnInit {
   selectedHospital: Hospital | null = null;
   provider: ethers.providers.Web3Provider | null = null;
   metaMaskNotInstalled = false;
+  hospitalsLoading = false;
+  actionInProgress = false;
 
   constructor(
     private hospitalService: HospitalService,
@@ -36,7 +40,11 @@ export class HospitalSelectionComponent implements OnInit {
   }
 
   private loadHospitals(): void {
-    this.hospitalService.getHospitals().subscribe({
+    this.hospitalsLoading = true;
+
+    this.hospitalService.getHospitals()
+    .pipe(finalize(() => this.hospitalsLoading = false))
+    .subscribe({
       next: (data) => {
         this.hospitals = this.getUniqueHospitals(data);
       },
@@ -47,6 +55,8 @@ export class HospitalSelectionComponent implements OnInit {
   }
 
   onRegisterHospital(): void {
+    this.actionInProgress = true;
+
     const hospital: Hospital = {
       hospitalWalletAddress: '',
       name: this.hospitalName,
@@ -54,7 +64,9 @@ export class HospitalSelectionComponent implements OnInit {
       vote: 0,
     };
 
-    this.hospitalService.createHospital(hospital).subscribe({
+    this.hospitalService.createHospital(hospital)
+    .pipe(finalize(() => this.actionInProgress = false))
+    .subscribe({
       next: (tx) => {
         console.log('Transaction sent, hash:', tx.hash);
 
@@ -72,6 +84,8 @@ export class HospitalSelectionComponent implements OnInit {
   }
 
   async onHospitalSelect(event: Event): Promise<void> {
+    this.actionInProgress = true;
+
     const selectElement = event.target as HTMLSelectElement;
     const selectedAddress = selectElement.value;
 
@@ -83,6 +97,7 @@ export class HospitalSelectionComponent implements OnInit {
       this.selectedHospital = selectedHospital;
       this.hospitalService.setHospital(selectedHospital);
       this.connectToMetaMask();
+      this.actionInProgress = false;
       this.router.navigate([paths.HomePath]);
     } else {
       console.error('Selected hospital not found');

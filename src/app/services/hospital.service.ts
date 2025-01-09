@@ -85,8 +85,8 @@ export class HospitalService {
   }
 
   getHospitalFromStorage(): Hospital | null {
-    const hospitalJson = localStorage.getItem('selectedHospital');
-    return hospitalJson ? JSON.parse(hospitalJson) : null;
+    const selectedHospital = localStorage.getItem('selectedHospital');
+    return selectedHospital ? JSON.parse(selectedHospital) : null;
   }
 
   private saveHospitalToStorage(hospital: Hospital | null): void {

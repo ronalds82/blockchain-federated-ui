@@ -16,10 +16,22 @@
   <div class="d-flex justify-content-end">
     <button class="btn btn-primary my-2 me-2"
             [disabled]="hasHospitalJoined(hospital)"
-            (click)="onJoinButtonClick()">Join</button>
+            (click)="onJoinButtonClick()">
+      @if(actionInProgress) {
+      <app-spinner></app-spinner>
+      } @else {
+      <span>Join</span>
+      }
+    </button>
     <button class="btn btn-secondary my-2"
             [disabled]="!hasHospitalJoined(hospital)"
-            (click)="onLeaveButtonClick()">Leave</button>
+            (click)="onLeaveButtonClick()">
+      @if(actionInProgress) {
+      <app-spinner></app-spinner>
+      } @else {
+      <span>Leave</span>
+      }
+    </button>
   </div>
 </ng-container>
 

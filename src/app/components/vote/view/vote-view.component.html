@@ -12,13 +12,23 @@
 </table>
 
 <div class="d-flex">
-  <button class="btn btn-primary my-2 me-2 align-self-start" [disabled]="!isVoteButtonEnabled"
-    (click)="onVoteButtonClick(VoteValue.ACCEPT)">
-    Accept
+  <button class="btn btn-primary my-2 me-2 align-self-start"
+          [disabled]="!isVoteButtonEnabled"
+          (click)="onVoteButtonClick(VoteValue.ACCEPT)">
+    @if(voteInProgress) {
+    <app-spinner></app-spinner>
+    } @else {
+    <span>Accept</span>
+    }
   </button>
 
-  <button class="btn btn-secondary my-2 align-self-end" [disabled]="!isVoteButtonEnabled"
-    (click)="onVoteButtonClick(VoteValue.DENY)">
-    Deny
+  <button class="btn btn-secondary my-2 align-self-end"
+          [disabled]="!isVoteButtonEnabled"
+          (click)="onVoteButtonClick(VoteValue.DENY)">
+    @if(voteInProgress) {
+    <app-spinner></app-spinner>
+    } @else {
+    <span>Deny</span>
+    }
   </button>
 </div>

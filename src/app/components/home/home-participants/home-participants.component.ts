@@ -2,15 +2,17 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Hospital } from '../../../models/hospital.model';
 import { CommonModule } from '@angular/common';
 import { Role } from '../../../enums/role.enum';
+import { SpinnerComponent } from '../../spinner/spinner.component';
 
 @Component({
   selector: 'app-home-participants',
-  imports: [CommonModule],
+  imports: [CommonModule, SpinnerComponent],
   templateUrl: './home-participants.component.html'
 })
 export class HomeParticipantsComponent {
   @Input() hospitals: Hospital[] | null = [];
   @Input() hospital: Hospital | null = null;
+  @Input() actionInProgress: boolean = false;
 
   @Output() onJoin = new EventEmitter<void>();
   @Output() onLeave = new EventEmitter<void>();

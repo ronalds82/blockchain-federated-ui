@@ -1,11 +1,16 @@
 <div class="my-3">
-  <span class="fw-bold">Current Status:</span>
+  <span class="fw-bold">Current Status</span>
+  <span>:&nbsp;</span>
   <span>{{ currentStatus }}</span>
 </div>
 
 <button class="btn btn-secondary my-2"
         (click)="onGetStatusButtonClick()">
-  Get Status
+  @if(actionInProgress) {
+  <app-spinner></app-spinner>
+  } @else {
+  <span>Get Status</span>
+  }
 </button>
 
 <div class="my-3">
@@ -23,17 +28,29 @@
 
 <button class="btn btn-success my-2 me-2"
         (click)="onUpdateStatusButtonClick()">
-  Update Status
+  @if(actionInProgress) {
+  <app-spinner></app-spinner>
+  } @else {
+  <span>Update Status</span>
+  }
 </button>
 
 <button class="btn btn-success my-2 me-2"
         [disabled]="!isRoundStatusNone"
         (click)="onInitializeRoundButtonClick()">
-  Initialize round
+  @if(actionInProgress) {
+  <app-spinner></app-spinner>
+  } @else {
+  <span>Initialize round</span>
+  }
 </button>
 
 <button class="btn btn-success my-2"
         [disabled]="!isStartTrainingButtonEnabled"
         (click)="onStartTrainingButtonClick()">
-  Start training
+  @if(actionInProgress) {
+  <app-spinner></app-spinner>
+  } @else {
+  <span>Start training</span>
+  }
 </button>
