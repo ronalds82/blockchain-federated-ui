@@ -4,6 +4,7 @@ import { HospitalService } from '../../services/hospital.service';
 import { Observable } from 'rxjs';
 import { Hospital } from '../../models/hospital.model';
 import { contractAddress as trainingStatusContractAddress, abi as trainingStatusAbi } from '../../../../backend/constants/training_status_contract.js'
+import { contractAddress, abi } from '../../../../backend/constants/participants_contract.js';
 import { ethers } from '../../../../backend/sample_from_tutorial/ethers-5.6.esm.min';
 import { HomeConnectComponent } from './home-connect/home-connect.component';
 import { HomeParticipantsComponent } from './home-participants/home-participants.component';
@@ -20,7 +21,9 @@ export class HomeComponent implements OnInit {
   connectButtonLabel: string = 'Connect to MetaMask';
   currentStatus: RoundStatus | null = null;
   provider: ethers.providers.Web3Provider | null = null;
+  hospitalProvider: ethers.providers.Web3Provider | null = null;
   contract: ethers.Contract | null = null;
+  hospitalContract: ethers.Contract | null = null;
   hospitals$: Observable<Hospital[]> | null = null;
   hospital$: Observable<Hospital | null>;
 
@@ -33,6 +36,8 @@ export class HomeComponent implements OnInit {
     if (window.ethereum) {
       this.provider = new ethers.providers.Web3Provider(window.ethereum);
       this.contract = new ethers.Contract(trainingStatusContractAddress, trainingStatusAbi, this.provider);
+      this.hospitalProvider = new ethers.providers.Web3Provider(window.ethereum);
+      this.hospitalContract = new ethers.Contract(contractAddress, abi, this.provider);
     } else {
       this.connectButtonLabel = 'Please install MetaMask';
     }
@@ -82,12 +87,44 @@ export class HomeComponent implements OnInit {
     }
   }
   
-  async onJoin(): Promise<void> {
-    return; // TODO: implement after BE is done
+  async onJoin(name: string, role: number): Promise<void> {
+    if (this.hospitalProvider && this.hospitalContract) {
+      try {
+        const signer = this.hospitalProvider.getSigner();
+        const signedContract = this.hospitalContract.connect(signer);
+        const txResponse = await signedContract.join(name, role);
+        console.log('Transaction sent:', txResponse.hash);
+  
+        await txResponse.wait(); // Wait for the transaction to be mined
+        console.log('Joined successfully');
+        alert('Joined successfully!');
+      } catch (error) {
+        console.error('Error during join:', error);
+        alert('Failed to join. Please check the console for details.');
+      }
+    } else {
+      alert('Please install MetaMask or ensure you are connected to the blockchain.');
+    }
   }
 
   async onLeave(): Promise<void> {
-    return; // TODO: implement after BE is done
+    if (this.hospitalProvider && this.hospitalContract) {
+      try {
+        const signer = this.hospitalProvider.getSigner();
+        const signedContract = this.hospitalContract.connect(signer);
+        const txResponse = await signedContract.leave();
+        console.log('Transaction sent:', txResponse.hash);
+  
+        await txResponse.wait(); // Wait for the transaction to be mined
+        console.log('Left successfully');
+        alert('Left successfully!');
+      } catch (error) {
+        console.error('Error during leave:', error);
+        alert('Failed to leave. Please check the console for details.');
+      }
+    } else {
+      alert('Please install MetaMask or ensure you are connected to the blockchain.');
+    }
   }
 
   private listenForTransactionMine(transactionResponse: ethers.providers.TransactionResponse): Promise<void> {

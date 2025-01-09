@@ -63,6 +63,10 @@ async function main() {
       name: "TrainingStatusManager",
       filePath: "./constants/training_status_contract.js",
     },
+    {
+      name: "ParticipantsManager",
+      filePath: "./constants/participants_contract.js",
+    },
     // {
     //   name: "ExampleContract",
     //   filePath: "./scripts/example_contract.js",
