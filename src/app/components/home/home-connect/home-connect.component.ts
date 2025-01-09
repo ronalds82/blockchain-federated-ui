@@ -18,10 +18,8 @@ export class HomeConnectComponent {
   ];
 
   @Input() hospitals: Hospital[] | null = []; 
-  @Input() connectButtonLabel!: string;
   @Input() currentStatus!: RoundStatus | null;
 
-  @Output() onConnect = new EventEmitter<void>();
   @Output() onGetStatus = new EventEmitter<void>();
   @Output() onUpdateStatus = new EventEmitter<RoundStatus>();
   @Output() onInitializeRound = new EventEmitter<void>();
@@ -42,10 +40,6 @@ export class HomeConnectComponent {
 
   get isRoundStatusNone(): boolean {
     return this.currentStatus === RoundStatus.NONE;
-  }
-
-  onConnectButtonClick(): void {
-    this.onConnect.emit();
   }
 
   onGetStatusButtonClick(): void {

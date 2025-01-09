@@ -1,20 +1,41 @@
 <div>
+  <div *ngIf="metaMaskNotInstalled"
+       class="mb-2">Please install MetaMask!</div>
+
   <div>
-    <h2>Register a new Hospital</h2>
+    <h2>Register a new Hospital:</h2>
+
     <form (ngSubmit)="onRegisterHospital()">
       <div>
         <label for="hospitalName">Hospital Name:</label>
-        <input id="hospitalName" [(ngModel)]="hospitalName" name="hospitalName" required />
+
+        <input id="hospitalName"
+               [(ngModel)]="hospitalName"
+               name="hospitalName"
+               class="form-control"
+               required />
       </div>
-      <button type="submit">Register</button>
+
+      <button type="submit"
+              class="btn btn-primary mt-2">
+        Register
+      </button>
     </form>
   </div>
-  <label for="hospitalSelect">Select a Hospital:</label>
 
-  <select id="hospitalSelect" class="form-select mt-2" (change)="onHospitalSelect($event)">
-    <option value="" disabled selected>Select a hospital</option>
-    <option *ngFor="let hospital of hospitals" [value]="hospital.hospitalWalletAddress">
-      {{ hospital.name }} {{(hospital.hospitalWalletAddress) }}
-    </option>
-  </select>
+  <div class="mt-3">
+    <h2 for="hospitalSelect">Or select a Hospital:</h2>
+
+    <select id="hospitalSelect"
+            class="form-select mt-2"
+            (change)="onHospitalSelect($event)">
+      <option value=""
+              disabled
+              selected>Select a hospital</option>
+      <option *ngFor="let hospital of hospitals"
+              [value]="hospital.hospitalWalletAddress">
+        {{ hospital.name }} {{(hospital.hospitalWalletAddress) }}
+      </option>
+    </select>
+  </div>
 </div>

@@ -17,7 +17,6 @@ import { RoundStatus } from '../../enums/round-status.enum';
 export class HomeComponent implements OnInit {
   readonly RoundStatus = RoundStatus;
 
-  connectButtonLabel: string = 'Connect to MetaMask';
   currentStatus: RoundStatus | null = null;
   provider: ethers.providers.Web3Provider | null = null;
   contract: ethers.Contract | null = null;
@@ -33,52 +32,29 @@ export class HomeComponent implements OnInit {
     if (window.ethereum) {
       this.provider = new ethers.providers.Web3Provider(window.ethereum);
       this.contract = new ethers.Contract(trainingStatusContractAddress, trainingStatusAbi, this.provider);
-    } else {
-      this.connectButtonLabel = 'Please install MetaMask';
-    }
-  }
-
-  async onConnect(): Promise<void> {
-    if (this.provider) {
-      try {
-        await this.provider.send('eth_requestAccounts', []);
-        this.connectButtonLabel = 'Connected to MetaMask';
-        const accounts = await this.provider.listAccounts();
-        console.log('Connected accounts:', accounts);
-      } catch (error) {
-        console.error('Error connecting:', error);
-      }
     }
   }
 
   async onGetStatus(): Promise<void> {
-    if (this.contract) {
-      try {
-        const status = await this.contract.getStatus();
-        this.currentStatus = status;
-        console.log('Current Status:', status);
-      } catch (error) {
-        console.error('Error getting status:', error);
-      }
-    } else {
-      alert('Please install MetaMask');
+    try {
+      const status = await this.contract.getStatus();
+      this.currentStatus = status;
+      console.log('Current Status:', status);
+    } catch (error) {
+      console.error('Error getting status:', error);
     }
   }
 
   async onUpdateStatus(selectedStatus: RoundStatus): Promise<void> {
-    if (this.provider && this.contract) {
-      try {
-        const signer = this.provider.getSigner();
-        const signedContract = this.contract.connect(signer);
-        const txResponse = await signedContract.updateStatus(selectedStatus);
-        await this.listenForTransactionMine(txResponse);
-        console.log('Status updated');
-        this.onGetStatus();
-      } catch (error) {
-        console.error('Error updating status:', error);
-      }
-    } else {
-      alert('Please install MetaMask');
+    try {
+      const signer = this.provider.getSigner();
+      const signedContract = this.contract.connect(signer);
+      const txResponse = await signedContract.updateStatus(selectedStatus);
+      await this.listenForTransactionMine(txResponse);
+      console.log('Status updated');
+      this.onGetStatus();
+    } catch (error) {
+      console.error('Error updating status:', error);
     }
   }
 
