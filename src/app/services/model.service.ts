@@ -10,6 +10,8 @@ import { ModelResponse } from '../models/model-response.model';
   providedIn: 'root',
 })
 export class ModelService {
+  private backendBaseUrl = 'http://localhost:3001';
+
   constructor(private http: HttpClient) {}
 
   getModels(): Observable<GlobalModel[]> {
@@ -22,5 +24,19 @@ export class ModelService {
 
   downloadModel(modelId: number): Observable<ModelResponse> {
     return this.http.post<ModelResponse>(`${baseUrl}/download`, { modelId });
+  }
+
+  getIPFSModels(): Observable<GlobalModel[]> {
+    return this.http.get<GlobalModel[]>(`${this.backendBaseUrl}/models`);
+  }
+
+  uploadToIPFS(file: File): Observable<{ success: boolean; cid: string }> {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    return this.http.post<{ success: boolean; cid: string }>(
+      `${this.backendBaseUrl}/upload-to-ipfs`,
+      formData
+    );
   }
 }

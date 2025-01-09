@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { GlobalModel } from '../../models/global-model.model';
 import { ModelService } from '../../services/model.service';
+import { GlobalModel } from '../../models/global-model.model';
 import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-model-download',
   imports: [CommonModule],
-  templateUrl: './model-download.component.html'
+  templateUrl: './model-download.component.html',
 })
 export class ModelDownloadComponent implements OnInit {
   models: GlobalModel[] = [];
@@ -19,9 +19,8 @@ export class ModelDownloadComponent implements OnInit {
     });
   }
 
-  downloadModel(id: number): void {
-    this.modelService.downloadModel(id).subscribe((response) => {
-      window.open(response.fileUrl, '_blank');
-    });
+  downloadModel(cid: string): void {
+    const ipfsUrl = `https://ipfs.io/ipfs/${cid}`;
+    window.open(ipfsUrl, '_blank');
   }
 }

@@ -4,4 +4,5 @@ export interface GlobalModel {
   timestamp: string;
   isFree: boolean;
   fee?: number;
+  cid: string;
 }

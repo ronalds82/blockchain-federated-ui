@@ -1,20 +1,32 @@
-<div *ngIf="hospital$ | async as hospital">
-  <h3>Upload model weights</h3>
+<div>
+  <h3>Upload model weights to IPFS</h3>
 
-  <input type="file"
-         class="form-control mt-3"
-         (change)="onInputChange($event)" />
+  <!-- File input field -->
+  <input
+    type="file"
+    class="form-control mt-3"
+    (change)="onInputChange($event)"
+  />
 
+  <!-- Upload button -->
   <div class="d-flex justify-content-end mt-2">
-    <button class="btn btn-primary my-2"
-            [disabled]="!file"
-            (click)="uploadModel(hospital)">
-      Upload
+    <button
+      class="btn btn-primary my-2"
+      [disabled]="!file"
+      (click)="uploadToIPFS()"
+    >
+      Upload to IPFS
     </button>
   </div>
 
-  <div *ngIf="uploadSuccess"
-       class="alert alert-success mt-3">
+  <!-- Success message -->
+  <div *ngIf="uploadSuccess" class="alert alert-success mt-3">
     {{ statusMessage }}
   </div>
+
+  <!-- Error message -->
+  <div *ngIf="!uploadSuccess && statusMessage" class="alert alert-danger mt-3">
+    {{ statusMessage }}
+  </div>
+
 </div>
