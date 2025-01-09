@@ -10,5 +10,5 @@ import { RouterModule, RouterOutlet } from '@angular/router';
 })
 export class AppComponent {
   title = 'Federated Learning UI';
-  hospitalJson = localStorage.getItem('selectedHospital');
+  selectedHospital = localStorage.getItem('selectedHospital');
 }

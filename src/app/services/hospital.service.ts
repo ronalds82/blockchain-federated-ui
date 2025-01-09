@@ -79,23 +79,17 @@ export class HospitalService {
     );
   }
 
-  // TODO
-  setHospital(hospital: Hospital): void {
+  setHospital(hospital: Hospital | null): void {
     this.selectedHospitalSubject.next(hospital);
     this.saveHospitalToStorage(hospital);
   }
 
-  // TODO 
-  getSelectedHospital(): Hospital | null {
-    return this.selectedHospitalSubject.value;
-  }
-  // TODO 
-  private saveHospitalToStorage(hospital: Hospital): void {
-    localStorage.setItem('selectedHospital', JSON.stringify(hospital));
-  }
-  // TODO 
-  private getHospitalFromStorage(): Hospital | null {
+  getHospitalFromStorage(): Hospital | null {
     const hospitalJson = localStorage.getItem('selectedHospital');
     return hospitalJson ? JSON.parse(hospitalJson) : null;
+  }
+
+  private saveHospitalToStorage(hospital: Hospital | null): void {
+    localStorage.setItem('selectedHospital', JSON.stringify(hospital));
   }
 }

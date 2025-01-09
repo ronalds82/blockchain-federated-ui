@@ -9,6 +9,7 @@ import { ethers } from '../../../../backend/sample_from_tutorial/ethers-5.6.esm.
 import { HomeConnectComponent } from './home-connect/home-connect.component';
 import { HomeParticipantsComponent } from './home-participants/home-participants.component';
 import { RoundStatus } from '../../enums/round-status.enum';
+import { Role } from '../../enums/role.enum';
 
 @Component({
   selector: 'app-home-component',
@@ -66,11 +67,12 @@ export class HomeComponent implements OnInit {
       try {
         const signer = this.provider.getSigner();
         const signedContract = this.hospitalsContract.connect(signer);
-        const participantRole = 3
-        const txResponse = await signedContract.setRole(participantRole);
+        const txResponse = await signedContract.setRole(Role.PARTICIPANT);
+        const selectedHospital = this.hospitalService.getHospitalFromStorage();
+        selectedHospital?.role === Role.PARTICIPANT;
+        this.hospitalService.setHospital(selectedHospital);
         await this.listenForTransactionMine(txResponse);
         this.hospitals$ = this.getHospitals();
-        this.hospital$ = this.hospitalService.hospital$;
       } catch (error) {
         console.error('Error updating status:', error);
       }
@@ -85,11 +87,12 @@ export class HomeComponent implements OnInit {
       try {
         const signer = this.provider.getSigner();
         const signedContract = this.hospitalsContract.connect(signer);
-        const defaultRole = 0
-        const txResponse = await signedContract.setRole(defaultRole);       
+        const txResponse = await signedContract.setRole(Role.NULL);
+        const selectedHospital = this.hospitalService.getHospitalFromStorage();
+        selectedHospital?.role === Role.NULL;
+        this.hospitalService.setHospital(selectedHospital);       
         await this.listenForTransactionMine(txResponse);
         this.hospitals$ = this.getHospitals();
-        this.hospital$ = this.hospitalService.hospital$;
       } catch (error) {
         console.error('Error updating status:', error);
       }
