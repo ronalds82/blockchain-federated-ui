@@ -10,8 +10,8 @@
                         [actionInProgress]="actionInProgress"
                         (onGetStatus)="onGetStatus()"
                         (onUpdateStatus)="onUpdateStatus($event)"
-                        (onInitializeRound)="onUpdateStatus(RoundStatus.WAITING_FOR_PARTICPANTS)"
-                        (onStartTraining)="onUpdateStatus(RoundStatus.START_TRAINING)">
+                        (onInitializeRound)="onInitializeRound()"
+                        (onStartTraining)="onStartTraining($event)">
       </app-home-connect>
     </div>
 

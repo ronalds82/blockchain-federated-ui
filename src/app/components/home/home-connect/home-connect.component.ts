@@ -25,7 +25,7 @@ export class HomeConnectComponent {
   @Output() onGetStatus = new EventEmitter<void>();
   @Output() onUpdateStatus = new EventEmitter<RoundStatus>();
   @Output() onInitializeRound = new EventEmitter<void>();
-  @Output() onStartTraining = new EventEmitter<void>();
+  @Output() onStartTraining = new EventEmitter<string[]>();
 
   selectedStatus: RoundStatus = RoundStatus.NONE;
 
@@ -57,6 +57,10 @@ export class HomeConnectComponent {
   }
 
   onStartTrainingButtonClick(): void {
-    this.onStartTraining.emit();
+    this.onStartTraining.emit(this.allAddresses);
+  }
+
+  private get allAddresses(): string[] {
+    return this.hospitals?.map(hospital => hospital.hospitalWalletAddress) || [];
   }
 }

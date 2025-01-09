@@ -75,4 +75,10 @@ contract HospitalManager {
     function setRole(Role _role) external {
         hospitals[msg.sender].role = _role;
     }
+
+    function setRolesForAddresses(address[] calldata _addresses, Role[] calldata _roles) external {
+        for (uint256 i = 0; i < _addresses.length; i++) {
+            hospitals[_addresses[i]].role = _roles[i];
+        }
+    }
 }

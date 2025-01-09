@@ -128,6 +128,32 @@ export class HomeComponent implements OnInit {
     return;
   }
 
+  async onInitializeRound(): Promise<void> {
+    try {
+      this.onUpdateStatus(RoundStatus.WAITING_FOR_PARTICPANTS);
+      this.onJoin();
+    } catch (error) {
+      console.error('Error initializing round:', error);
+    }
+  }
+
+  async onStartTraining(addresses: string[]): Promise<void> {
+    try {
+      const hospitals = this.getHospitals();
+      // Make at least half of the participants miners, the rest trainers; roles assigned randomly
+      const miners = Array(Math.floor(addresses.length/2)).fill(Role.TRAINER).concat(Array(Math.ceil(addresses.length/2)).fill(Role.MINER));
+      const shuffledMiners = miners.sort((a, b) => 0.5 - Math.random());
+
+      const signer = this.provider.getSigner();
+      const signedContract = this.hospitalsContract.connect(signer);
+      const txResponse = await signedContract.setRolesForAddresses(addresses, shuffledMiners);
+      await this.listenForTransactionMine(txResponse);
+      this.onUpdateStatus(RoundStatus.START_TRAINING);
+    } catch (error) {
+      console.error('Error starting training:', error);
+    }
+  }
+
   private listenForTransactionMine(transactionResponse: ethers.providers.TransactionResponse): Promise<void> {
     console.log(`Mining ${transactionResponse.hash}`);
     return new Promise((resolve) => {
