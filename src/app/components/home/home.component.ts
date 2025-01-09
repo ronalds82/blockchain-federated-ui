@@ -66,10 +66,11 @@ export class HomeComponent implements OnInit {
       try {
         const signer = this.provider.getSigner();
         const signedContract = this.hospitalsContract.connect(signer);
-        const txResponse = await signedContract.join();
+        const participantRole = 3
+        const txResponse = await signedContract.setRole(participantRole);
         await this.listenForTransactionMine(txResponse);
-        const participants = await signedContract.getAllHospitals();
-        console.log('Current participants:', participants);
+        this.hospitals$ = this.getHospitals();
+        this.hospital$ = this.hospitalService.hospital$;
       } catch (error) {
         console.error('Error updating status:', error);
       }
@@ -80,15 +81,15 @@ export class HomeComponent implements OnInit {
   }
 
   async onLeave(): Promise<void> {
-    console.log('About to leave');
     if (this.provider && this.hospitalsContract) {
       try {
         const signer = this.provider.getSigner();
         const signedContract = this.hospitalsContract.connect(signer);
-        const txResponse = await signedContract.removeHospitalFromTrainingRound();        
+        const defaultRole = 0
+        const txResponse = await signedContract.setRole(defaultRole);       
         await this.listenForTransactionMine(txResponse);
-        const participants = await signedContract.getAllHospitals();
-        console.log('Current participants:', participants);
+        this.hospitals$ = this.getHospitals();
+        this.hospital$ = this.hospitalService.hospital$;
       } catch (error) {
         console.error('Error updating status:', error);
       }

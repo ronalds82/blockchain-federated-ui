@@ -5,7 +5,8 @@ contract HospitalManager {
     enum Role {
         Null, // default when not in a training round
         Miner,
-        Trainer
+        Trainer,
+        Participant
     }
 
     enum Vote {
@@ -26,9 +27,6 @@ contract HospitalManager {
 
     // Keep an array of addresses so we can retrieve all participants easily
     address[] private hospitalAddresses;
-
-    // Hospitals that have joined the training round
-    address[] private currentParticipants;
 
     // Event emitted when a hospital joins the training round
     event HospitalCreated(
@@ -60,32 +58,6 @@ contract HospitalManager {
     }
 
     event ParticipantJoined(address indexed hospitalAddress);
-    
-    function join() public {
-        currentParticipants.push(msg.sender);
-        emit ParticipantJoined(msg.sender);
-    }
-
-    // Event emitted when a hospital leaves the training round
-    event HospitalRemoved(address indexed hospitalAddress);
-
-    function removeHospitalFromTrainingRound() external {
-        // Remove from the array by swapping and popping
-        for (uint256 i = 0; i < currentParticipants.length; i++) {
-            if (currentParticipants[i] == msg.sender) {
-                currentParticipants[i] = currentParticipants[
-                    currentParticipants.length - 1
-                ];
-                currentParticipants.pop();
-                break;
-            }
-        }
-
-        // Delete from the mapping
-        delete hospitals[msg.sender];
-
-        emit HospitalRemoved(msg.sender);
-    }
 
     function getAllHospitals() external view returns (Hospital[] memory) {
         Hospital[] memory _hospitals = new Hospital[](hospitalAddresses.length);
@@ -96,28 +68,11 @@ contract HospitalManager {
         return _hospitals;
     }
 
-    function getAllCurrentParticipants() external view returns (Hospital[] memory) {
-        Hospital[] memory _hospitals = new Hospital[](currentParticipants.length);
-        for (uint256 i = 0; i < currentParticipants.length; i++) {
-            address addr = currentParticipants[i];
-            _hospitals[i] = hospitals[addr];
-        }
-        return _hospitals;
-    }
-
     function setVote(Vote _vote) external {
-        require(
-            hospitals[msg.sender].role != Role.Null,
-            "Hospital not joined."
-        );
         hospitals[msg.sender].vote = _vote;
     }
 
     function setRole(Role _role) external {
-        require(
-            hospitals[msg.sender].role != Role.Null,
-            "Hospital not joined."
-        );
         hospitals[msg.sender].role = _role;
     }
 }
