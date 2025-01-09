@@ -14,14 +14,14 @@ import { VoteValue } from '../../enums/vote-value.enum';
 export class VoteComponent {
   hospitals$: Observable<Hospital[]> | null = null;
   hospital$: Observable<Hospital | null>;
-  
+
   constructor(private hospitalService: HospitalService) {
     this.hospitals$ = this.hospitalService.getHospitals();
     this.hospital$ = this.hospitalService.hospital$;
   }
 
   onVote(vote: VoteValue): void {
-    vote === VoteValue.Accept ? this.onAccept() : this.onDeny();
+    vote === VoteValue.ACCEPT ? this.onAccept() : this.onDeny();
   }
 
   private async onAccept(): Promise<void> {

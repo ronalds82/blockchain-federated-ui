@@ -4,7 +4,7 @@ import { HospitalService } from '../../services/hospital.service';
 import { Observable } from 'rxjs';
 import { Hospital } from '../../models/hospital.model';
 import { contractAddress as trainingStatusContractAddress, abi as trainingStatusAbi } from '../../../../backend/constants/training_status_contract.js'
-import { ethers } from '../../../../backend/sample_from_tutorial/ethers-5.6.esm.min';
+import { ethers } from '../../../../backend/sample_from_tutorial/ethers-5.6.esm.min'; // TODO just replace this with ether nmp package, will have to do some refactoring though
 import { HomeConnectComponent } from './home-connect/home-connect.component';
 import { HomeParticipantsComponent } from './home-participants/home-participants.component';
 import { RoundStatus } from '../../enums/round-status.enum';
@@ -81,7 +81,7 @@ export class HomeComponent implements OnInit {
       alert('Please install MetaMask');
     }
   }
-  
+
   async onJoin(): Promise<void> {
     return; // TODO: implement after BE is done
   }

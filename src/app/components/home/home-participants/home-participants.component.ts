@@ -11,7 +11,7 @@ import { Role } from '../../../enums/role.enum';
 export class HomeParticipantsComponent {
   @Input() hospitals: Hospital[] | null = [];
   @Input() hospital: Hospital | null = null;
-  
+
   @Output() onJoin = new EventEmitter<void>();
   @Output() onLeave = new EventEmitter<void>();
 
@@ -19,7 +19,7 @@ export class HomeParticipantsComponent {
     let totalParticipants = 0;
 
     this.hospitals?.forEach(hospital => {
-      if(this.hasHospitalJoined(hospital)) {
+      if (this.hasHospitalJoined(hospital)) {
         totalParticipants++;
       }
     });
@@ -28,7 +28,7 @@ export class HomeParticipantsComponent {
   }
 
   hasHospitalJoined(hospital: Hospital | null): boolean {
-    return hospital?.role === Role.Miner || hospital?.role === Role.Trainer;
+    return hospital?.role === Role.MINER || hospital?.role === Role.TRAINER;
   }
 
   onJoinButtonClick(): void {

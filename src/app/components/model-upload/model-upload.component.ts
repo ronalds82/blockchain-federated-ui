@@ -34,10 +34,11 @@ export class ModelUploadComponent {
     }
   }
 
+  // TODO
   uploadModel(hospital: Hospital): void {
-    this.modelService.uploadModel(this.file, hospital.id).subscribe((response) => {
-      this.uploadSuccess = response.success;
-      this.statusMessage = response.message;
-    });
+    // this.modelService.uploadModel(this.file, hospital).subscribe((response) => {
+    //   this.uploadSuccess = response.success;
+    //   this.statusMessage = response.message;
+    // });
   }
 }

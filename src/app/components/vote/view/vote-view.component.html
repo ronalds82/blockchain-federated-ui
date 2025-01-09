@@ -12,15 +12,13 @@
 </table>
 
 <div class="d-flex">
-  <button class="btn btn-primary my-2 me-2 align-self-start"
-          [disabled]="!isVoteButtonEnabled"
-          (click)="onVoteButtonClick(VoteValue.Accept)">
+  <button class="btn btn-primary my-2 me-2 align-self-start" [disabled]="!isVoteButtonEnabled"
+    (click)="onVoteButtonClick(VoteValue.ACCEPT)">
     Accept
   </button>
 
-  <button class="btn btn-secondary my-2 align-self-end"
-          [disabled]="!isVoteButtonEnabled"
-          (click)="onVoteButtonClick(VoteValue.Deny)">
+  <button class="btn btn-secondary my-2 align-self-end" [disabled]="!isVoteButtonEnabled"
+    (click)="onVoteButtonClick(VoteValue.DENY)">
     Deny
   </button>
 </div>

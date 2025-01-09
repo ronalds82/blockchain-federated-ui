@@ -19,14 +19,14 @@ export class VoteViewComponent {
 
   get isVoteButtonEnabled(): boolean {
     console.log(this.hospital);
-    return this.hospital?.role === Role.Miner && !this.hasHospitalVoted(this.hospital);
+    return this.hospital?.role === Role.MINER && !this.hasHospitalVoted(this.hospital);
   }
 
   totalVotes(): number {
     let totalVotes = 0;
 
     this.hospitals?.forEach(hospital => {
-      if(this.hasHospitalVoted(hospital)) {
+      if (this.hasHospitalVoted(hospital)) {
         totalVotes++;
       }
     });
@@ -35,7 +35,7 @@ export class VoteViewComponent {
   }
 
   hasHospitalVoted(hospital: Hospital | null): boolean {
-    return !!hospital?.hasVoted;
+    return hospital?.vote != 0;
   }
 
   onVoteButtonClick(vote: VoteValue): void {

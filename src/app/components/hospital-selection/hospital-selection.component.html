@@ -1,15 +1,20 @@
 <div>
+  <div>
+    <h2>Register a new Hospital</h2>
+    <form (ngSubmit)="onRegisterHospital()">
+      <div>
+        <label for="hospitalName">Hospital Name:</label>
+        <input id="hospitalName" [(ngModel)]="hospitalName" name="hospitalName" required />
+      </div>
+      <button type="submit">Register</button>
+    </form>
+  </div>
   <label for="hospitalSelect">Select a Hospital:</label>
 
-  <select id="hospitalSelect"
-          class="form-select mt-2"
-          (change)="onHospitalSelect($event)">
-    <option value=""
-            disabled
-            selected>Select a hospital</option>
-    <option *ngFor="let hospital of hospitals"
-            [value]="hospital.id">
-      {{ hospital.name }} ({{ hospital.role }})
+  <select id="hospitalSelect" class="form-select mt-2" (change)="onHospitalSelect($event)">
+    <option value="" disabled selected>Select a hospital</option>
+    <option *ngFor="let hospital of hospitals" [value]="hospital.hospitalWalletAddress">
+      {{ hospital.name }} {{(hospital.hospitalWalletAddress) }}
     </option>
   </select>
 </div>
