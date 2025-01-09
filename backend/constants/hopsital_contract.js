@@ -1,4 +1,4 @@
-export const contractAddress = "0x8A791620dd6260079BF849Dc5567aDC3F2FdC318";
+export const contractAddress = "0xB7f8BC63BbcaD18155201308C8f3540b07f84F5e";
 export const abi = [
     {
       "anonymous": false,
@@ -73,6 +73,41 @@ export const abi = [
       "name": "createHospital",
       "outputs": [],
       "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getAllCurrentParticipants",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "address",
+              "name": "hospitalAddress",
+              "type": "address"
+            },
+            {
+              "internalType": "string",
+              "name": "name",
+              "type": "string"
+            },
+            {
+              "internalType": "enum HospitalManager.Role",
+              "name": "role",
+              "type": "uint8"
+            },
+            {
+              "internalType": "enum HospitalManager.Vote",
+              "name": "vote",
+              "type": "uint8"
+            }
+          ],
+          "internalType": "struct HospitalManager.Hospital[]",
+          "name": "",
+          "type": "tuple[]"
+        }
+      ],
+      "stateMutability": "view",
       "type": "function"
     },
     {

@@ -96,6 +96,15 @@ contract HospitalManager {
         return _hospitals;
     }
 
+    function getAllCurrentParticipants() external view returns (Hospital[] memory) {
+        Hospital[] memory _hospitals = new Hospital[](currentParticipants.length);
+        for (uint256 i = 0; i < currentParticipants.length; i++) {
+            address addr = currentParticipants[i];
+            _hospitals[i] = hospitals[addr];
+        }
+        return _hospitals;
+    }
+
     function setVote(Vote _vote) external {
         require(
             hospitals[msg.sender].role != Role.Null,
