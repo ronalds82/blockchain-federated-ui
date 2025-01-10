@@ -131,8 +131,9 @@ export class HomeComponent implements OnInit {
     this.actionInProgress = true;
 
     try {
-      this.onUpdateStatus(RoundStatus.WAITING_FOR_PARTICPANTS);
-      this.onJoin();
+      await this.onUpdateStatus(RoundStatus.WAITING_FOR_PARTICIPANTS);
+      await this.onGetStatus();
+      await this.onJoin();
     } catch (error) {
       console.error('Error initializing round:', error);
     }

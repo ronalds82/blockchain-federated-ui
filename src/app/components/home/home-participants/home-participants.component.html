@@ -8,7 +8,9 @@
 
     <tbody>
       <tr *ngFor="let hospital of hospitals">
-        <td *ngIf="hasHospitalJoined(hospital)">{{ hospital.name }}</td>
+        <td *ngIf="hasHospitalJoined(hospital)">
+          {{ hospital.name }} {{ mapRole(hospital.role) }}
+        </td>
       </tr>
     </tbody>
   </table>
@@ -17,20 +19,23 @@
     <button class="btn btn-primary my-2 me-2"
             [disabled]="hasHospitalJoined(hospital) || actionInProgress"
             (click)="onJoinButtonClick()">
-      @if(actionInProgress) {
-      <app-spinner></app-spinner>
-      } @else {
-      <span>Join</span>
-      }
+      <ng-container *ngIf="actionInProgress; else joinLabel">
+        <app-spinner></app-spinner>
+      </ng-container>
+      <ng-template #joinLabel>
+        <span>Join</span>
+      </ng-template>
     </button>
+
     <button class="btn btn-secondary my-2"
             [disabled]="!hasHospitalJoined(hospital) || actionInProgress"
             (click)="onLeaveButtonClick()">
-      @if(actionInProgress) {
-      <app-spinner></app-spinner>
-      } @else {
-      <span>Leave</span>
-      }
+      <ng-container *ngIf="actionInProgress; else leaveLabel">
+        <app-spinner></app-spinner>
+      </ng-container>
+      <ng-template #leaveLabel>
+        <span>Leave</span>
+      </ng-template>
     </button>
   </div>
 </ng-container>

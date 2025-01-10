@@ -41,7 +41,7 @@ export class HomeConnectComponent {
   }
 
   get isStartTrainingButtonEnabled(): boolean {
-    return !!this.hospitals?.length && this.hospitals?.length >= 5 && this.currentStatus === RoundStatus.WAITING_FOR_PARTICPANTS;
+    return !!this.hospitals?.length && this.hospitals?.length >= 5 && this.currentStatus === RoundStatus.WAITING_FOR_PARTICIPANTS;
   }
 
   get isRoundStatusNone(): boolean {
