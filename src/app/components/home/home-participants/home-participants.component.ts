@@ -1,8 +1,9 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Hospital } from '../../../models/hospital.model';
 import { CommonModule } from '@angular/common';
-import { Role } from '../../../enums/role.enum';
 import { SpinnerComponent } from '../../spinner/spinner.component';
+
+import { Hospital } from '../../../models/hospital.model';
+import { Role } from '../../../enums/role.enum';
 
 @Component({
   selector: 'app-home-participants',
@@ -17,20 +18,33 @@ export class HomeParticipantsComponent {
   @Output() onJoin = new EventEmitter<void>();
   @Output() onLeave = new EventEmitter<void>();
 
-  totalParticipants(): number {
-    let totalParticipants = 0;
-
-    this.hospitals?.forEach(hospital => {
-      if (this.hasHospitalJoined(hospital)) {
-        totalParticipants++;
-      }
-    });
-
-    return totalParticipants;
+  mapRole(role: Role): string {
+    switch (role) {
+      case Role.NULL:
+        return 'Null';
+      case Role.TRAINER:
+        return 'Trainer';
+      case Role.MINER:
+        return 'Miner';
+      case Role.PARTICIPANT:
+        return '';
+      default:
+        return 'Unknown';
+    }
   }
 
+  totalParticipants(): number {
+    let total = 0;
+    this.hospitals?.forEach(h => {
+      if (this.hasHospitalJoined(h)) {
+        total++;
+      }
+    });
+    return total;
+  }
+  
   hasHospitalJoined(hospital: Hospital | null): boolean {
-    return hospital?.role === Role.PARTICIPANT;
+    return hospital?.role !== Role.NULL;
   }
 
   onJoinButtonClick(): void {
