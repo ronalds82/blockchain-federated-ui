@@ -8,18 +8,35 @@
 
     <tbody>
       <tr *ngFor="let hospital of hospitals">
-        <td *ngIf="hasHospitalJoined(hospital)">{{ hospital.name }}</td>
+        <td *ngIf="hasHospitalJoined(hospital)">
+          {{ hospital.name }} {{ mapRole(hospital.role) }}
+        </td>
       </tr>
     </tbody>
   </table>
 
   <div class="d-flex justify-content-end">
     <button class="btn btn-primary my-2 me-2"
-            [disabled]="hasHospitalJoined(hospital)"
-            (click)="onJoinButtonClick()">Join</button>
+            [disabled]="hasHospitalJoined(hospital) || actionInProgress"
+            (click)="onJoinButtonClick()">
+      <ng-container *ngIf="actionInProgress; else joinLabel">
+        <app-spinner></app-spinner>
+      </ng-container>
+      <ng-template #joinLabel>
+        <span>Join</span>
+      </ng-template>
+    </button>
+
     <button class="btn btn-secondary my-2"
-            [disabled]="!hasHospitalJoined(hospital)"
-            (click)="onLeaveButtonClick()">Leave</button>
+            [disabled]="!hasHospitalJoined(hospital) || actionInProgress"
+            (click)="onLeaveButtonClick()">
+      <ng-container *ngIf="actionInProgress; else leaveLabel">
+        <app-spinner></app-spinner>
+      </ng-container>
+      <ng-template #leaveLabel>
+        <span>Leave</span>
+      </ng-template>
+    </button>
   </div>
 </ng-container>
 

@@ -14,9 +14,6 @@ export class ModelDownloadComponent implements OnInit {
   constructor(private modelService: ModelService) {}
 
   ngOnInit(): void {
-    this.modelService.getModels().subscribe((data) => {
-      this.models = data;
-    });
   }
 
   downloadModel(id: number): void {

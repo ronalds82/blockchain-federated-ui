@@ -21,6 +21,7 @@
     "@angular/router": "^19.0.0",
     "@metamask/sdk": "^0.30.3",
     "bootstrap": "^5.3.3",
+    "ethers": "^6.13.5",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.15.0"

@@ -3,10 +3,11 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Hospital } from '../../../models/hospital.model';
 import { RoundStatus } from '../../../enums/round-status.enum';
+import { SpinnerComponent } from '../../spinner/spinner.component';
 
 @Component({
   selector: 'app-home-connect',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, SpinnerComponent],
   templateUrl: './home-connect.component.html'
 })
 export class HomeConnectComponent {
@@ -18,14 +19,13 @@ export class HomeConnectComponent {
   ];
 
   @Input() hospitals: Hospital[] | null = []; 
-  @Input() connectButtonLabel!: string;
-  @Input() currentStatus!: RoundStatus | null;
+  @Input() currentStatus!: number;
+  @Input() actionInProgress: boolean = false;
 
-  @Output() onConnect = new EventEmitter<void>();
   @Output() onGetStatus = new EventEmitter<void>();
   @Output() onUpdateStatus = new EventEmitter<RoundStatus>();
   @Output() onInitializeRound = new EventEmitter<void>();
-  @Output() onStartTraining = new EventEmitter<void>();
+  @Output() onStartTraining = new EventEmitter<string[]>();
 
   selectedStatus: RoundStatus = RoundStatus.NONE;
 
@@ -36,16 +36,16 @@ export class HomeConnectComponent {
       value: RoundStatus[key as keyof typeof RoundStatus] 
     }));
 
+  get currentStatusName(): string {
+    return this.statusOptions.filter((status) => status.value === this.currentStatus)[0]?.label;
+  }
+
   get isStartTrainingButtonEnabled(): boolean {
-    return !!this.hospitals?.length && this.hospitals?.length >= 5 && this.currentStatus === RoundStatus.WAITING_FOR_PARTICPANTS;
+    return !!this.hospitals?.length && this.hospitals?.length >= 5 && this.currentStatus === RoundStatus.WAITING_FOR_PARTICIPANTS;
   }
 
   get isRoundStatusNone(): boolean {
     return this.currentStatus === RoundStatus.NONE;
-  }
-
-  onConnectButtonClick(): void {
-    this.onConnect.emit();
   }
 
   onGetStatusButtonClick(): void {
@@ -61,6 +61,10 @@ export class HomeConnectComponent {
   }
 
   onStartTrainingButtonClick(): void {
-    this.onStartTraining.emit();
+    this.onStartTraining.emit(this.allAddresses);
+  }
+
+  private get allAddresses(): string[] {
+    return this.hospitals?.map(hospital => hospital.hospitalWalletAddress) || [];
   }
 }

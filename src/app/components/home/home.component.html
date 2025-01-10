@@ -6,18 +6,19 @@
   <div class="row g-4">
     <div class="col-md-6">
       <app-home-connect [hospitals]="hospitals$ | async"
-                        [connectButtonLabel]="connectButtonLabel"
                         [currentStatus]="currentStatus"
-                        (onConnect)="onConnect()"
+                        [actionInProgress]="actionInProgress"
                         (onGetStatus)="onGetStatus()"
                         (onUpdateStatus)="onUpdateStatus($event)"
-                        (onInitializeRound)="onUpdateStatus(RoundStatus.WAITING_FOR_PARTICPANTS)"
-                        (onStartTraining)="onUpdateStatus(RoundStatus.START_TRAINING)">
+                        (onInitializeRound)="onInitializeRound()"
+                        (onStartTraining)="onStartTraining($event)">
       </app-home-connect>
     </div>
+
     <div class="col-md-6">
       <app-home-participants [hospitals]="hospitals$ | async"
                              [hospital]="hospital$ | async"
+                             [actionInProgress]="actionInProgress"
                              (onJoin)="onJoin()"
                              (onLeave)="onLeave()">
       </app-home-participants>
