@@ -14,10 +14,6 @@ export class ModelService {
 
   constructor(private http: HttpClient) {}
 
-  getModels(): Observable<GlobalModel[]> {
-    return this.http.get<GlobalModel[]>(`${baseUrl}/models`);
-  }
-
   uploadModel(file: File | null, hospitalId: number): Observable<CustomResponse> {
     return this.http.post<CustomResponse>(`${baseUrl}/upload`, { file, hospitalId });
   }
@@ -28,6 +24,10 @@ export class ModelService {
 
   getIPFSModels(): Observable<GlobalModel[]> {
     return this.http.get<GlobalModel[]>(`${this.backendBaseUrl}/models`);
+  }
+
+  getModels(): Observable<GlobalModel[]> {
+    return this.http.get<GlobalModel[]>(`${baseUrl}/models`);
   }
 
   uploadToIPFS(file: File): Observable<{ success: boolean; cid: string }> {

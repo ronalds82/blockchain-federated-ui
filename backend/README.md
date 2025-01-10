@@ -29,3 +29,12 @@ This lesson has a section that explains how to connect to metamask
 watch the video to see the steps how, but our RPC server is defined in hardhat.config
 For now it is:
 http://127.0.0.1:8545/ 
+
+### To launch IPFS
+from backend/scripts dir:
+
+node upload.mjs
+
+from main dir:
+
+npx json-server --watch src/demo.json --port 3000
